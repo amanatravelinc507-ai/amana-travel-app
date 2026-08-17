@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Amana Operations Tracker</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root{
+    --black:#0b0b0c;
+    --black2:#141416;
+    --gold:#c9a227;
+    --gold-l:#e6c65c;
+    --gold-d:#8f7318;
+    --paper:#f7f5f0;
+    --ink:#1b1b1b;
+    --muted:#6b6b6b;
+    --red:#b3352c;
+    --green:#2c6e49;
+    --amber:#b8860b;
+    --line:#e4dfd2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  header{
+    background:linear-gradient(135deg,var(--black),var(--black2));
+    color:#fff;
+    padding:18px 16px 16px;
+    position:sticky; top:0; z-index:50;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);
+  }
+  header .brandrow{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  header h1{font-size:17px; margin:0; letter-spacing:.3px; font-weight:700;}
+  header .sub{font-size:11px; color:var(--gold-l); margin-top:2px; letter-spacing:.5px; text-transform:uppercase;}
+  .crescent{width:30px;height:30px;border-radius:50%;border:2px solid var(--gold);position:relative;flex-shrink:0;}
+  .crescent::after{content:"";position:absolute;top:-2px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--black2);}
+
+  .drivepill{
+    font-size:10.5px; font-weight:700; padding:6px 11px; border-radius:20px; border:1px solid var(--gold);
+    background:transparent; color:var(--gold-l); white-space:nowrap; display:flex; align-items:center; gap:5px;
+  }
+  .drivepill.connected{background:var(--gold); color:var(--black); border-color:var(--gold);}
+  .drivepill .dot{width:6px; height:6px; border-radius:50%; background:#d9534f;}
+  .drivepill.connected .dot{background:#1f7a3f;}
+
+  .toolbar{display:flex; gap:8px; padding:12px 16px 4px; overflow-x:auto;}
+  .stat{
+    flex:1; min-width:84px; background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:8px 10px; text-align:center;
+  }
+  .stat .n{font-size:16px; font-weight:800; color:var(--black);}
+  .stat .l{font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-top:2px;}
+  .stat.warn .n{color:var(--amber);}
+  .stat.alert .n{color:var(--red);}
+  .stat.ok .n{color:var(--green);}
+
+  .searchwrap{padding:10px 16px; display:flex; gap:8px;}
+  .searchwrap input[type=text]{
+    flex:1; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-size:14px; background:#fff;
+  }
+  .filterbtn{
+    padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; font-size:12px; color:var(--ink);
+    white-space:nowrap;
+  }
+  .filterbtn.active{background:var(--black); color:var(--gold-l); border-color:var(--black);}
+
+  .filterrow{display:flex; gap:6px; padding:0 16px 10px; overflow-x:auto;}
+
+  .list{padding:0 16px;}
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:10px;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .card .top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .card .name{font-weight:700; font-size:15px; color:var(--black);}
+  .card .grp{font-size:12px; color:var(--muted); margin-top:1px;}
+  .badge{
+    font-size:10px; font-weight:700; padding:4px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:.3px;
+    white-space:nowrap;
+  }
+  .b-deposit{background:#fdf0d5; color:var(--gold-d);}
+  .b-docs{background:#e6eef7; color:#2a5788;}
+  .b-final{background:#fef3e0; color:var(--amber);}
+  .b-ticketed{background:#e6f2ea; color:var(--green);}
+  .b-traveled{background:#eee; color:#555;}
+  .b-cancelled{background:#fbe7e5; color:var(--red);}
+
+  .progress{display:flex; gap:3px; margin:10px 0 8px;}
+  .progress .seg{flex:1; height:5px; border-radius:3px; background:#eee;}
+  .progress .seg.on{background:var(--gold);}
+
+  .rowline{display:flex; justify-content:space-between; font-size:12.5px; margin-top:4px; color:var(--ink);}
+  .rowline .k{color:var(--muted);}
+  .rowline .v{font-weight:600;}
+  .rowline .v.red{color:var(--red);}
+  .rowline .v.green{color:var(--green);}
+
+  .cardfoot{display:flex; gap:8px; margin-top:10px;}
+  .cardfoot button{
+    flex:1; padding:8px; border-radius:8px; border:1px solid var(--line); background:#fafafa; font-size:12px; font-weight:600;
+  }
+  .cardfoot button.primary{background:var(--black); color:var(--gold-l); border-color:var(--black);}
+
+  .fab{
+    position:fixed; right:18px; bottom:22px; width:56px; height:56px; border-radius:50%;
+    background:var(--black); color:var(--gold-l); font-size:28px; border:2px solid var(--gold);
+    box-shadow:0 4px 14px rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; z-index:60;
+  }
+
+  .empty{text-align:center; padding:50px 20px; color:var(--muted); font-size:13px;}
+
+  /* modal */
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100; display:none;
+    align-items:flex-end; justify-content:center;
+  }
+  .overlay.show{display:flex;}
+  .sheet{
+    background:#fff; width:100%; max-width:520px; max-height:92vh; overflow-y:auto;
+    border-radius:16px 16px 0 0; padding:16px 16px 24px;
+  }
+  .sheet h2{font-size:16px; margin:0 0 12px; color:var(--black);}
+  .field{margin-bottom:12px;}
+  .field label{display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.3px; margin-bottom:4px;}
+  .field input, .field select, .field textarea{
+    width:100%; padding:10px 11px; border:1px solid var(--line); border-radius:8px; font-size:14px; background:#fbfaf7;
+  }
+  .field textarea{min-height:60px; resize:vertical;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .sheetfoot{display:flex; gap:10px; margin-top:16px; position:sticky; bottom:0; background:#fff; padding-top:8px;}
+  .sheetfoot button{flex:1; padding:12px; border-radius:10px; font-size:14px; font-weight:700; border:none;}
+  .btn-cancel{background:#eee; color:#333;}
+  .btn-save{background:var(--black); color:var(--gold-l);}
+  .btn-danger{background:#fbe7e5; color:var(--red);}
+  .closebar{width:40px; height:4px; background:#ddd; border-radius:3px; margin:0 auto 12px;}
+
+  .stagepicker{display:flex; flex-wrap:wrap; gap:6px;}
+  .stagepicker span{
+    padding:7px 10px; border-radius:8px; border:1px solid var(--line); font-size:11.5px; font-weight:600; color:var(--ink);
+  }
+  .stagepicker span.sel{background:var(--black); color:var(--gold-l); border-color:var(--black);}
+
+  .doclist{border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .docrow{padding:10px 12px; border-bottom:1px solid var(--line); background:#fff;}
+  .docrow:last-child{border-bottom:none;}
+  .doctop{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .doclabel{font-size:13px; font-weight:700; color:var(--black);}
+  .docstatus{
+    font-size:10px; font-weight:700; padding:4px 9px; border-radius:14px; text-transform:uppercase; letter-spacing:.3px;
+    border:none;
+  }
+  .docstatus.pending{background:#fbe7e5; color:var(--red);}
+  .docstatus.received{background:#e6f2ea; color:var(--green);}
+  .docactions{display:flex; align-items:center; gap:8px; margin-top:8px;}
+  .filebtn{
+    font-size:11.5px; font-weight:600; padding:7px 10px; border-radius:7px; border:1px solid var(--line);
+    background:#fafafa; color:var(--ink); cursor:pointer; display:inline-block;
+  }
+  .filebtn input{display:none;}
+  .thumbrow{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
+  .thumb{position:relative; width:52px; height:52px; border-radius:6px; overflow:hidden; border:1px solid var(--line);}
+  .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .thumb .filepill{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:#f0ede3; font-size:9px; color:var(--muted); text-align:center; padding:2px;
+  }
+  .thumb .rm{
+    position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50%; background:var(--red); color:#fff;
+    font-size:10px; line-height:16px; text-align:center; cursor:pointer;
+  }
+  .docnote{font-size:10.5px; color:var(--muted); margin-top:8px; padding:0 2px;}
+  .docbadgemini{
+    display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--muted);
+    background:#f0ede3; padding:3px 8px; border-radius:20px; margin-top:8px;
+  }
+  .thumb.filelink{cursor:pointer;}
+  .thumb .uploading{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:#f0ede3; font-size:9px; color:var(--muted);
+  }
+
+  .liabilitybox{
+    background:#fdf6e3; border:1px solid #eddca0; border-radius:10px; padding:10px 12px; margin:12px 16px 4px;
+    font-size:12px; color:#6b5100;
+  }
+  .liabilitybox b{color:#4a3800;}
+
+  @media (min-width:640px){
+    .list{max-width:640px; margin:0 auto;}
+    .toolbar, .searchwrap, .filterrow, .liabilitybox{max-width:640px; margin-left:auto; margin-right:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brandrow">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="crescent"></div>
+      <div>
+        <h1>Amana Operations</h1>
+        <div class="sub">Deposit → Final Payment → Travel</div>
+      </div>
+    </div>
+    <button class="drivepill" id="drivePill" onclick="connectDrive()"><span class="dot"></span><span id="drivePillText">Connect Drive</span></button>
+  </div>
+</header>
+
+<div class="toolbar" id="statsRow"></div>
+
+<div class="liabilitybox">
+  <b>Restricted cash:</b> deposits held below are customer liabilities, not available operating cash, until final payment clears.
+</div>
+
+<div class="searchwrap">
+  <input type="text" id="searchInput" placeholder="Search name, group, phone...">
+</div>
+<div class="filterrow" id="filterRow"></div>
+
+<div class="list" id="tripList"></div>
+
+<button class="fab" onclick="openNew()">+</button>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <div class="closebar"></div>
+    <h2 id="sheetTitle">New Booking</h2>
+    <input type="hidden" id="tripId">
+
+    <div class="field">
+      <label>Customer Name</label>
+      <input type="text" id="custName" placeholder="Full name">
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Phone</label>
+        <input type="text" id="custPhone" placeholder="718-...">
+      </div>
+      <div class="field">
+        <label>Group / Package</label>
+        <input type="text" id="grpName" placeholder="e.g. Dec Umrah Group">
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Room Type</label>
+        <select id="roomType">
+          <option>Double</option>
+          <option>Triple</option>
+          <option>Quad</option>
+          <option>Single</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Travel Date</label>
+        <input type="date" id="travelDate">
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Total Package Price ($)</label>
+        <input type="number" id="totalPrice" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label>Deposit Received ($)</label>
+        <input type="number" id="depositAmt" placeholder="0.00">
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Deposit Date</label>
+        <input type="date" id="depositDate">
+      </div>
+      <div class="field">
+        <label>Balance Due Date</label>
+        <input type="date" id="balanceDueDate">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Final Payment Received ($)</label>
+      <input type="number" id="finalPaidAmt" placeholder="0.00">
+    </div>
+
+    <div class="field">
+      <label>Stage</label>
+      <div class="stagepicker" id="stagePicker"></div>
+    </div>
+
+    <div class="field">
+      <label>Documents</label>
+      <div class="doclist" id="docList"></div>
+      <div class="docnote" id="docNote">Connect Google Drive above, then uploads save straight into a "Amana Operations Documents" folder in your Drive — accessible from any device.</div>
+    </div>
+
+    <div class="field">
+      <label>Notes</label>
+      <textarea id="notes" placeholder="Any additional notes..."></textarea>
+    </div>
+
+    <div class="sheetfoot">
+      <button class="btn-cancel" onclick="closeSheet()">Cancel</button>
+      <button class="btn-save" onclick="saveTrip()">Save</button>
+    </div>
+    <div class="sheetfoot" id="deleteRow" style="display:none;">
+      <button class="btn-danger" onclick="deleteTrip()">Delete Booking</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STAGES = ["Deposit Received","Documents Collected","Final Payment Received","Ticketed","Traveled"];
+const STAGE_BADGE = {
+  "Deposit Received":"b-deposit",
+  "Documents Collected":"b-docs",
+  "Final Payment Received":"b-final",
+  "Ticketed":"b-ticketed",
+  "Traveled":"b-traveled",
+  "Cancelled":"b-cancelled"
+};
+const STORE_KEY = "amana_ops_trips_v1";
+let trips = [];
+let activeFilter = "All";
+
+const DOC_TYPES = [
+  {key:"passport", label:"Passport", multi:false},
+  {key:"visa", label:"Visa", multi:false},
+  {key:"ticket", label:"Flight Ticket", multi:false},
+  {key:"trainTicket", label:"Haramain Train Ticket", multi:false},
+  {key:"photos", label:"Photos", multi:true}
+];
+let currentDocuments = {};
+let currentDriveFolderId = null; // Drive folder for the booking currently open in the sheet
+
+// ===== GOOGLE DRIVE CONFIG =====
+// Paste your OAuth Client ID here after completing the Google Cloud setup steps.
+const GOOGLE_CLIENT_ID = "80675422060-il9qa500a8khq640usg7mb4gpqht9gdv.apps.googleusercontent.com";
+const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.file";
+const DRIVE_ROOT_FOLDER_NAME = "Amana Operations Documents";
+
+let gTokenClient = null;
+let accessToken = null;
+let driveRootFolderId = localStorage.getItem("amana_drive_root_id") || null;
+
+function initGoogleDrive(){
+  if(typeof google === "undefined" || !google.accounts){
+    setTimeout(initGoogleDrive, 400);
+    return;
+  }
+  gTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: DRIVE_SCOPE,
+    callback: ""  // set per-call
+  });
+}
+
+function updateDrivePill(){
+  const pill = document.getElementById("drivePill");
+  const txt = document.getElementById("drivePillText");
+  if(accessToken){
+    pill.classList.add("connected");
+    txt.textContent = "Drive Connected";
+  } else {
+    pill.classList.remove("connected");
+    txt.textContent = "Connect Drive";
+  }
+}
+
+function connectDrive(){
+  if(!gTokenClient){ alert("Google Drive is still loading, try again in a second."); return; }
+  gTokenClient.callback = (resp)=>{
+    if(resp.error){ alert("Google Drive connection failed: " + resp.error); return; }
+    accessToken = resp.access_token;
+    updateDrivePill();
+  };
+  gTokenClient.requestAccessToken({prompt: accessToken ? "" : "consent"});
+}
+
+function ensureToken(){
+  return new Promise((resolve, reject)=>{
+    if(accessToken){ resolve(accessToken); return; }
+    if(!gTokenClient){ reject("Google Drive not loaded yet."); return; }
+    gTokenClient.callback = (resp)=>{
+      if(resp.error){ reject(resp.error); return; }
+      accessToken = resp.access_token;
+      updateDrivePill();
+      resolve(accessToken);
+    };
+    gTokenClient.requestAccessToken({prompt:"consent"});
+  });
+}
+
+async function driveFetch(url, opts, retry){
+  opts = opts || {};
+  opts.headers = Object.assign({}, opts.headers, {Authorization: "Bearer " + accessToken});
+  const res = await fetch(url, opts);
+  if(res.status===401 && !retry){
+    accessToken = null;
+    await ensureToken();
+    return driveFetch(url, opts, true);
+  }
+  return res;
+}
+
+async function ensureRootFolder(){
+  if(driveRootFolderId) return driveRootFolderId;
+  const q = encodeURIComponent(`mimeType='application/vnd.google-apps.folder' and name='${DRIVE_ROOT_FOLDER_NAME}' and trashed=false`);
+  const searchRes = await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`);
+  const searchData = await searchRes.json();
+  if(searchData.files && searchData.files.length){
+    driveRootFolderId = searchData.files[0].id;
+  } else {
+    const createRes = await driveFetch("https://www.googleapis.com/drive/v3/files", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({name: DRIVE_ROOT_FOLDER_NAME, mimeType:"application/vnd.google-apps.folder"})
+    });
+    const createData = await createRes.json();
+    driveRootFolderId = createData.id;
+  }
+  localStorage.setItem("amana_drive_root_id", driveRootFolderId);
+  return driveRootFolderId;
+}
+
+async function ensureTripFolder(tripId, tripLabel){
+  if(currentDriveFolderId) return currentDriveFolderId;
+  const rootId = await ensureRootFolder();
+  const folderName = `Booking_${tripId}` + (tripLabel ? ` - ${tripLabel}` : "");
+  const q = encodeURIComponent(`'${rootId}' in parents and name contains 'Booking_${tripId}' and trashed=false and mimeType='application/vnd.google-apps.folder'`);
+  const searchRes = await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`);
+  const searchData = await searchRes.json();
+  if(searchData.files && searchData.files.length){
+    currentDriveFolderId = searchData.files[0].id;
+  } else {
+    const createRes = await driveFetch("https://www.googleapis.com/drive/v3/files", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({name: folderName, mimeType:"application/vnd.google-apps.folder", parents:[rootId]})
+    });
+    const createData = await createRes.json();
+    currentDriveFolderId = createData.id;
+  }
+  return currentDriveFolderId;
+}
+
+function compressImageToBlob(file){
+  return new Promise((resolve)=>{
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = new Image();
+      img.onload = function(){
+        const maxDim = 1400;
+        let w = img.width, h = img.height;
+        if(w>maxDim || h>maxDim){
+          if(w>=h){ h = Math.round(h*maxDim/w); w = maxDim; }
+          else{ w = Math.round(w*maxDim/h); h = maxDim; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        canvas.toBlob((blob)=> resolve(blob), "image/jpeg", 0.72);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadFileToDrive(blobOrFile, filename, folderId){
+  const metaRes = await driveFetch("https://www.googleapis.com/drive/v3/files", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({name: filename, parents:[folderId]})
+  });
+  const meta = await metaRes.json();
+  await driveFetch(`https://www.googleapis.com/upload/drive/v3/files/${meta.id}?uploadType=media`, {
+    method:"PATCH",
+    headers:{"Content-Type": blobOrFile.type || "application/octet-stream"},
+    body: blobOrFile
+  });
+  const finalRes = await driveFetch(`https://www.googleapis.com/drive/v3/files/${meta.id}?fields=id,webViewLink,name`);
+  return await finalRes.json();
+}
+
+function blankDocuments(){
+  const d = {};
+  DOC_TYPES.forEach(dt=> d[dt.key] = {status:"pending", files:[]});
+  return d;
+}
+
+function addFileToDoc(key, fileObj){
+  const dt = DOC_TYPES.find(d=>d.key===key);
+  if(!currentDocuments[key]) currentDocuments[key] = {status:"pending", files:[]};
+  if(dt.multi){
+    currentDocuments[key].files.push(fileObj);
+  } else {
+    currentDocuments[key].files = [fileObj];
+  }
+  currentDocuments[key].status = "received";
+  renderDocs();
+}
+
+function removeDocFile(key, idx){
+  if(!currentDocuments[key]) return;
+  currentDocuments[key].files.splice(idx,1);
+  if(currentDocuments[key].files.length===0) currentDocuments[key].status = "pending";
+  renderDocs();
+}
+
+function toggleDocStatus(key){
+  if(!currentDocuments[key]) currentDocuments[key] = {status:"pending", files:[]};
+  currentDocuments[key].status = currentDocuments[key].status==="received" ? "pending" : "received";
+  renderDocs();
+}
+
+async function onDocFileChange(input, key){
+  const files = Array.from(input.files||[]);
+  input.value = "";
+  if(!files.length) return;
+
+  const tripId = document.getElementById("tripId").value;
+  const custName = document.getElementById("custName").value.trim();
+
+  for(const file of files){
+    const placeholderId = "up_" + Date.now() + Math.random().toString(36).slice(2);
+    addFileToDoc(key, {name:file.name, driveId:null, viewLink:null, uploading:true, tempId:placeholderId});
+    try{
+      await ensureToken();
+      const folderId = await ensureTripFolder(tripId, custName);
+      const isImage = file.type && file.type.startsWith("image/");
+      const blobOrFile = isImage ? await compressImageToBlob(file) : file;
+      const uploadName = isImage ? (file.name.replace(/\.[^.]+$/, "") + ".jpg") : file.name;
+      const result = await uploadFileToDrive(blobOrFile, uploadName, folderId);
+
+      const dt = DOC_TYPES.find(d=>d.key===key);
+      const list = currentDocuments[key].files;
+      const idx = list.findIndex(f=>f.tempId===placeholderId);
+      if(idx>=0){
+        list[idx] = {name: result.name, driveId: result.id, viewLink: result.webViewLink};
+      }
+      renderDocs();
+    } catch(err){
+      const list = currentDocuments[key].files;
+      const idx = list.findIndex(f=>f.tempId===placeholderId);
+      if(idx>=0) list.splice(idx,1);
+      if(currentDocuments[key].files.length===0) currentDocuments[key].status = "pending";
+      renderDocs();
+      alert("Upload failed — check your Google Drive connection and try again.");
+    }
+  }
+}
+
+function renderDocs(){
+  const wrap = document.getElementById("docList");
+  wrap.innerHTML = DOC_TYPES.map(dt=>{
+    const entry = currentDocuments[dt.key] || {status:"pending", files:[]};
+    const thumbs = entry.files.map((f, idx)=>{
+      let inner;
+      if(f.uploading){
+        inner = `<div class="uploading">…</div>`;
+      } else if(f.viewLink){
+        inner = `<div class="filepill" onclick="window.open('${f.viewLink}','_blank')" style="cursor:pointer;">${(f.name||"file").slice(0,10)}</div>`;
+      } else {
+        inner = `<div class="filepill">${(f.name||"file").slice(0,10)}</div>`;
+      }
+      return `<div class="thumb">${inner}${!f.uploading?`<div class="rm" onclick="removeDocFile('${dt.key}',${idx})">×</div>`:""}</div>`;
+    }).join("");
+    const addLabel = dt.multi ? "+ Add Photo" : (entry.files.length ? "Replace" : "+ Add");
+    return `
+      <div class="docrow">
+        <div class="doctop">
+          <span class="doclabel">${dt.label}</span>
+          <button type="button" class="docstatus ${entry.status}" onclick="toggleDocStatus('${dt.key}')">${entry.status}</button>
+        </div>
+        <div class="docactions">
+          <label class="filebtn">${addLabel}
+            <input type="file" accept="image/*,.pdf" ${dt.multi?"multiple":""} capture="environment"
+              onchange="onDocFileChange(this,'${dt.key}')">
+          </label>
+        </div>
+        ${thumbs ? `<div class="thumbrow">${thumbs}</div>` : ""}
+      </div>
+    `;
+  }).join("");
+}
+
+function load(){
+  try{ trips = JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+  catch(e){ trips = []; }
+}
+function persist(){
+  localStorage.setItem(STORE_KEY, JSON.stringify(trips));
+}
+
+function fmt(n){
+  n = Number(n)||0;
+  return "$" + n.toLocaleString(undefined,{minimumFractionDigits:0, maximumFractionDigits:0});
+}
+function daysUntil(dateStr){
+  if(!dateStr) return null;
+  const d = new Date(dateStr+"T00:00:00");
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.round((d-now)/86400000);
+}
+
+function stageIndex(stage){
+  if(stage==="Cancelled") return -1;
+  return STAGES.indexOf(stage);
+}
+
+function renderStats(){
+  const total = trips.filter(t=>t.stage!=="Cancelled").length;
+  const depositsHeld = trips.filter(t=>t.stage!=="Cancelled").reduce((s,t)=>s+(Number(t.depositAmt)||0),0);
+  const balanceOutstanding = trips.filter(t=>t.stage!=="Cancelled").reduce((s,t)=>{
+    const bal = (Number(t.totalPrice)||0) - (Number(t.depositAmt)||0) - (Number(t.finalPaidAmt)||0);
+    return s + Math.max(bal,0);
+  },0);
+  const dueSoon = trips.filter(t=>{
+    if(t.stage==="Cancelled" || t.stage==="Traveled") return false;
+    const d = daysUntil(t.balanceDueDate);
+    return d!==null && d<=14;
+  }).length;
+
+  document.getElementById("statsRow").innerHTML = `
+    <div class="stat"><div class="n">${total}</div><div class="l">Active Bookings</div></div>
+    <div class="stat warn"><div class="n">${fmt(depositsHeld)}</div><div class="l">Deposits Held</div></div>
+    <div class="stat ok"><div class="n">${fmt(balanceOutstanding)}</div><div class="l">Balance Due</div></div>
+    <div class="stat alert"><div class="n">${dueSoon}</div><div class="l">Due ≤14 Days</div></div>
+  `;
+}
+
+function renderFilters(){
+  const opts = ["All", ...STAGES, "Cancelled"];
+  document.getElementById("filterRow").innerHTML = opts.map(o=>
+    `<button class="filterbtn ${o===activeFilter?'active':''}" onclick="setFilter('${o}')">${o}</button>`
+  ).join("");
+}
+function setFilter(f){ activeFilter = f; renderList(); renderFilters(); }
+
+function renderList(){
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  let rows = trips.filter(t=>{
+    if(activeFilter!=="All" && t.stage!==activeFilter) return false;
+    if(!q) return true;
+    return (t.custName||"").toLowerCase().includes(q) ||
+           (t.grpName||"").toLowerCase().includes(q) ||
+           (t.custPhone||"").toLowerCase().includes(q);
+  });
+
+  rows.sort((a,b)=>{
+    const da = a.travelDate || "9999";
+    const db = b.travelDate || "9999";
+    return da.localeCompare(db);
+  });
+
+  const list = document.getElementById("tripList");
+  if(rows.length===0){
+    list.innerHTML = `<div class="empty">No bookings yet. Tap + to add one.</div>`;
+    return;
+  }
+
+  list.innerHTML = rows.map(t=>{
+    const idx = stageIndex(t.stage);
+    const balance = (Number(t.totalPrice)||0) - (Number(t.depositAmt)||0) - (Number(t.finalPaidAmt)||0);
+    const dLeft = daysUntil(t.travelDate);
+    const badgeClass = STAGE_BADGE[t.stage] || "b-deposit";
+    const segs = STAGES.map((s,i)=>`<div class="seg ${idx>=i?'on':''}"></div>`).join("");
+    const docsObj = t.documents || {};
+    const docsReceived = DOC_TYPES.filter(dt=> docsObj[dt.key] && docsObj[dt.key].status==="received").length;
+    return `
+      <div class="card" onclick="openEdit('${t.id}')">
+        <div class="top">
+          <div>
+            <div class="name">${t.custName||"Unnamed"}</div>
+            <div class="grp">${t.grpName||""} ${t.roomType?('· '+t.roomType):''}</div>
+          </div>
+          <span class="badge ${badgeClass}">${t.stage}</span>
+        </div>
+        ${t.stage!=="Cancelled" ? `<div class="progress">${segs}</div>` : ""}
+        <div class="rowline"><span class="k">Travel Date</span><span class="v">${t.travelDate||"—"} ${dLeft!==null && dLeft>=0 ? `(${dLeft}d)`:''}</span></div>
+        <div class="rowline"><span class="k">Total / Deposit</span><span class="v">${fmt(t.totalPrice)} / ${fmt(t.depositAmt)}</span></div>
+        <div class="rowline"><span class="k">Balance Due</span><span class="v ${balance>0?'red':'green'}">${fmt(balance)}</span></div>
+        <div class="docbadgemini">📄 ${docsReceived}/${DOC_TYPES.length} docs</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderStagePicker(selected){
+  const all = [...STAGES, "Cancelled"];
+  document.getElementById("stagePicker").innerHTML = all.map(s=>
+    `<span class="${s===selected?'sel':''}" onclick="pickStage('${s}')">${s}</span>`
+  ).join("");
+}
+let currentStage = "Deposit Received";
+function pickStage(s){
+  currentStage = s;
+  renderStagePicker(s);
+}
+
+function openNew(){
+  document.getElementById("sheetTitle").textContent = "New Booking";
+  document.getElementById("tripId").value = "t" + Date.now();
+  currentDriveFolderId = null;
+  document.getElementById("custName").value = "";
+  document.getElementById("custPhone").value = "";
+  document.getElementById("grpName").value = "";
+  document.getElementById("roomType").value = "Double";
+  document.getElementById("travelDate").value = "";
+  document.getElementById("totalPrice").value = "";
+  document.getElementById("depositAmt").value = "";
+  document.getElementById("depositDate").value = "";
+  document.getElementById("balanceDueDate").value = "";
+  document.getElementById("finalPaidAmt").value = "";
+  document.getElementById("notes").value = "";
+  currentStage = "Deposit Received";
+  renderStagePicker(currentStage);
+  currentDocuments = blankDocuments();
+  renderDocs();
+  document.getElementById("deleteRow").style.display = "none";
+  document.getElementById("overlay").classList.add("show");
+}
+
+function openEdit(id){
+  const t = trips.find(x=>x.id===id);
+  if(!t) return;
+  document.getElementById("sheetTitle").textContent = "Edit Booking";
+  document.getElementById("tripId").value = t.id;
+  currentDriveFolderId = t.driveFolderId || null;
+  document.getElementById("custName").value = t.custName||"";
+  document.getElementById("custPhone").value = t.custPhone||"";
+  document.getElementById("grpName").value = t.grpName||"";
+  document.getElementById("roomType").value = t.roomType||"Double";
+  document.getElementById("travelDate").value = t.travelDate||"";
+  document.getElementById("totalPrice").value = t.totalPrice||"";
+  document.getElementById("depositAmt").value = t.depositAmt||"";
+  document.getElementById("depositDate").value = t.depositDate||"";
+  document.getElementById("balanceDueDate").value = t.balanceDueDate||"";
+  document.getElementById("finalPaidAmt").value = t.finalPaidAmt||"";
+  document.getElementById("notes").value = t.notes||"";
+  currentStage = t.stage||"Deposit Received";
+  renderStagePicker(currentStage);
+  currentDocuments = t.documents ? JSON.parse(JSON.stringify(t.documents)) : blankDocuments();
+  DOC_TYPES.forEach(dt=>{ if(!currentDocuments[dt.key]) currentDocuments[dt.key] = {status:"pending", files:[]}; });
+  renderDocs();
+  document.getElementById("deleteRow").style.display = "flex";
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closeSheet(){
+  document.getElementById("overlay").classList.remove("show");
+}
+
+function documentsForStorage(docs){
+  const out = {};
+  Object.keys(docs).forEach(k=>{
+    out[k] = {
+      status: docs[k].status,
+      files: docs[k].files.filter(f=>!f.uploading).map(f=>({name:f.name, driveId:f.driveId, viewLink:f.viewLink}))
+    };
+  });
+  return out;
+}
+
+function saveTrip(){
+  const id = document.getElementById("tripId").value || ("t"+Date.now());
+  const data = {
+    id,
+    driveFolderId: currentDriveFolderId,
+    custName: document.getElementById("custName").value.trim(),
+    custPhone: document.getElementById("custPhone").value.trim(),
+    grpName: document.getElementById("grpName").value.trim(),
+    roomType: document.getElementById("roomType").value,
+    travelDate: document.getElementById("travelDate").value,
+    totalPrice: document.getElementById("totalPrice").value,
+    depositAmt: document.getElementById("depositAmt").value,
+    depositDate: document.getElementById("depositDate").value,
+    balanceDueDate: document.getElementById("balanceDueDate").value,
+    finalPaidAmt: document.getElementById("finalPaidAmt").value,
+    notes: document.getElementById("notes").value.trim(),
+    stage: currentStage,
+    documents: documentsForStorage(currentDocuments)
+  };
+  const idx = trips.findIndex(x=>x.id===id);
+  if(idx>=0) trips[idx] = data; else trips.push(data);
+  try{
+    persist();
+  } catch(e){
+    alert("Couldn't save — this device's storage is full. Try removing a large photo from an older booking, then save again.");
+    return;
+  }
+  closeSheet();
+  renderStats();
+  renderList();
+}
+
+function deleteTrip(){
+  const id = document.getElementById("tripId").value;
+  if(!id) return;
+  if(!confirm("Delete this booking? This cannot be undone.")) return;
+  trips = trips.filter(x=>x.id!==id);
+  persist();
+  closeSheet();
+  renderStats();
+  renderList();
+}
+
+document.getElementById("searchInput").addEventListener("input", renderList);
+
+load();
+renderStats();
+renderFilters();
+renderList();
+updateDrivePill();
+initGoogleDrive();
+</script>
+
+</body>
+</html>
