@@ -50,6 +50,12 @@
   .drivepill .dot{width:6px; height:6px; border-radius:50%; background:#d9534f;}
   .drivepill.connected .dot{background:#1f7a3f;}
 
+  .backrow{display:flex; align-items:center; gap:8px; padding:10px 16px 0;}
+  .backbtn{
+    display:flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--black);
+    background:none; border:none; padding:6px 4px; cursor:pointer;
+  }
+
   .toolbar{display:flex; gap:8px; padding:12px 16px 4px; overflow-x:auto;}
   .stat{
     flex:1; min-width:84px; background:#fff; border:1px solid var(--line); border-radius:10px;
@@ -65,13 +71,13 @@
   .searchwrap input[type=text]{
     flex:1; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-size:14px; background:#fff;
   }
+
+  .filterrow{display:flex; gap:6px; padding:0 16px 10px; overflow-x:auto;}
   .filterbtn{
     padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; font-size:12px; color:var(--ink);
     white-space:nowrap;
   }
   .filterbtn.active{background:var(--black); color:var(--gold-l); border-color:var(--black);}
-
-  .filterrow{display:flex; gap:6px; padding:0 16px 10px; overflow-x:auto;}
 
   .list{padding:0 16px;}
   .card{
@@ -102,11 +108,40 @@
   .rowline .v.red{color:var(--red);}
   .rowline .v.green{color:var(--green);}
 
-  .cardfoot{display:flex; gap:8px; margin-top:10px;}
-  .cardfoot button{
-    flex:1; padding:8px; border-radius:8px; border:1px solid var(--line); background:#fafafa; font-size:12px; font-weight:600;
+  .docbadgemini{
+    display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--muted);
+    background:#f0ede3; padding:3px 8px; border-radius:20px; margin-top:8px;
   }
-  .cardfoot button.primary{background:var(--black); color:var(--gold-l); border-color:var(--black);}
+
+  .grouphead{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px; margin:0 16px 12px;
+  }
+  .grouphead .gname{font-size:17px; font-weight:800; color:var(--black);}
+  .grouphead .gdates{font-size:12.5px; color:var(--muted); margin-top:2px;}
+  .grouphead .gedit{
+    margin-top:10px; font-size:12px; font-weight:700; color:var(--gold-d); background:none; border:none; padding:0;
+  }
+
+  .memberrow{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:8px;
+  }
+  .memberrow .mname{font-weight:700; font-size:14px; color:var(--black);}
+  .memberrow .mmeta{font-size:11.5px; color:var(--muted); margin-top:2px;}
+  .memberrow .mright{text-align:right;}
+
+  .roomssection{margin:0 16px 12px;}
+  .roomssection .rstitle{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;}
+  .roomssection .rsaddbtn{font-size:11px; font-weight:700; color:var(--gold-d); background:none; border:none; padding:0;}
+  .roomscroll{display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;}
+  .roomcard{
+    flex:0 0 auto; min-width:130px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:9px 11px; cursor:pointer;
+  }
+  .roomcard .rlabel{font-weight:700; font-size:13px; color:var(--black);}
+  .roomcard .rtype{font-size:10.5px; color:var(--gold-d); font-weight:700; margin-top:1px;}
+  .roomcard .roccupants{font-size:11px; color:var(--muted); margin-top:5px; line-height:1.4;}
+  .roomcard .rempty{font-size:11px; color:var(--muted); font-style:italic; margin-top:5px;}
+  .noroom{color:var(--red);}
 
   .fab{
     position:fixed; right:18px; bottom:22px; width:56px; height:56px; border-radius:50%;
@@ -166,7 +201,6 @@
   .filebtn input{display:none;}
   .thumbrow{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
   .thumb{position:relative; width:52px; height:52px; border-radius:6px; overflow:hidden; border:1px solid var(--line);}
-  .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
   .thumb .filepill{
     width:100%; height:100%; display:flex; align-items:center; justify-content:center;
     background:#f0ede3; font-size:9px; color:var(--muted); text-align:center; padding:2px;
@@ -175,16 +209,11 @@
     position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50%; background:var(--red); color:#fff;
     font-size:10px; line-height:16px; text-align:center; cursor:pointer;
   }
-  .docnote{font-size:10.5px; color:var(--muted); margin-top:8px; padding:0 2px;}
-  .docbadgemini{
-    display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--muted);
-    background:#f0ede3; padding:3px 8px; border-radius:20px; margin-top:8px;
-  }
-  .thumb.filelink{cursor:pointer;}
   .thumb .uploading{
     width:100%; height:100%; display:flex; align-items:center; justify-content:center;
     background:#f0ede3; font-size:9px; color:var(--muted);
   }
+  .docnote{font-size:10.5px; color:var(--muted); margin-top:8px; padding:0 2px;}
 
   .liabilitybox{
     background:#fdf6e3; border:1px solid #eddca0; border-radius:10px; padding:10px 12px; margin:12px 16px 4px;
@@ -193,8 +222,8 @@
   .liabilitybox b{color:#4a3800;}
 
   @media (min-width:640px){
-    .list{max-width:640px; margin:0 auto;}
-    .toolbar, .searchwrap, .filterrow, .liabilitybox{max-width:640px; margin-left:auto; margin-right:auto;}
+    .list, .grouphead{max-width:640px; margin-left:auto; margin-right:auto;}
+    .toolbar, .searchwrap, .filterrow, .liabilitybox, .backrow{max-width:640px; margin-left:auto; margin-right:auto;}
   }
 </style>
 </head>
@@ -206,63 +235,122 @@
       <div class="crescent"></div>
       <div>
         <h1>Amana Operations</h1>
-        <div class="sub">Deposit → Final Payment → Travel</div>
+        <div class="sub" id="headerSub">Umrah Groups</div>
       </div>
     </div>
     <button class="drivepill" id="drivePill" onclick="connectDrive()"><span class="dot"></span><span id="drivePillText">Connect Drive</span></button>
   </div>
 </header>
 
+<div class="backrow" id="backRow" style="display:none;">
+  <button class="backbtn" onclick="goToGroups()">&larr; All Groups</button>
+</div>
+
 <div class="toolbar" id="statsRow"></div>
 
-<div class="liabilitybox">
+<div class="liabilitybox" id="liabilityBox">
   <b>Restricted cash:</b> deposits held below are customer liabilities, not available operating cash, until final payment clears.
 </div>
 
+<div id="groupHeadWrap"></div>
+<div id="roomsWrap"></div>
+
 <div class="searchwrap">
-  <input type="text" id="searchInput" placeholder="Search name, group, phone...">
+  <input type="text" id="searchInput" placeholder="Search...">
 </div>
 <div class="filterrow" id="filterRow"></div>
 
-<div class="list" id="tripList"></div>
+<div class="list" id="mainList"></div>
 
-<button class="fab" onclick="openNew()">+</button>
+<button class="fab" id="fabBtn" onclick="onFabClick()">+</button>
 
-<!-- Modal -->
-<div class="overlay" id="overlay">
+<!-- Group Modal -->
+<div class="overlay" id="groupOverlay">
   <div class="sheet">
     <div class="closebar"></div>
-    <h2 id="sheetTitle">New Booking</h2>
-    <input type="hidden" id="tripId">
+    <h2 id="groupSheetTitle">New Umrah Group</h2>
+    <input type="hidden" id="groupId">
+    <div class="field">
+      <label>Group Name</label>
+      <input type="text" id="groupName" placeholder="e.g. December 2026 Umrah Group">
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Travel Date</label>
+        <input type="date" id="groupTravelDate">
+      </div>
+      <div class="field">
+        <label>Return Date</label>
+        <input type="date" id="groupReturnDate">
+      </div>
+    </div>
+    <div class="field">
+      <label>Notes</label>
+      <textarea id="groupNotes" placeholder="Hotel, flights, or other group-level notes..."></textarea>
+    </div>
+    <div class="sheetfoot">
+      <button class="btn-cancel" onclick="closeGroupSheet()">Cancel</button>
+      <button class="btn-save" onclick="saveGroup()">Save</button>
+    </div>
+    <div class="sheetfoot" id="groupDeleteRow" style="display:none;">
+      <button class="btn-danger" onclick="deleteGroup()">Delete Group</button>
+    </div>
+  </div>
+</div>
+
+<!-- Room Modal -->
+<div class="overlay" id="roomOverlay" style="z-index:110;">
+  <div class="sheet">
+    <div class="closebar"></div>
+    <h2 id="roomSheetTitle">New Room</h2>
+    <input type="hidden" id="roomId">
+    <div class="field">
+      <label>Room Label</label>
+      <input type="text" id="roomLabel" placeholder="e.g. Room 1, Amina's Room">
+    </div>
+    <div class="field">
+      <label>Room Type</label>
+      <select id="roomTypeSelect">
+        <option>Double</option>
+        <option>Triple</option>
+        <option>Quad</option>
+        <option>Single</option>
+      </select>
+    </div>
+    <div class="sheetfoot">
+      <button class="btn-cancel" onclick="closeRoomSheet()">Cancel</button>
+      <button class="btn-save" onclick="saveRoom()">Save</button>
+    </div>
+    <div class="sheetfoot" id="roomDeleteRow" style="display:none;">
+      <button class="btn-danger" onclick="deleteRoom()">Delete Room</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member Modal -->
+<div class="overlay" id="memberOverlay">
+  <div class="sheet">
+    <div class="closebar"></div>
+    <h2 id="memberSheetTitle">New Traveler</h2>
+    <input type="hidden" id="memberId">
 
     <div class="field">
-      <label>Customer Name</label>
+      <label>Full Name</label>
       <input type="text" id="custName" placeholder="Full name">
     </div>
+    <div class="field">
+      <label>Umrah Group</label>
+      <select id="memberGroupId" onchange="onMemberGroupChange(this)"></select>
+    </div>
+    <input type="hidden" id="memberOriginGroupId">
     <div class="grid2">
       <div class="field">
         <label>Phone</label>
         <input type="text" id="custPhone" placeholder="718-...">
       </div>
       <div class="field">
-        <label>Group / Package</label>
-        <input type="text" id="grpName" placeholder="e.g. Dec Umrah Group">
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="field">
-        <label>Room Type</label>
-        <select id="roomType">
-          <option>Double</option>
-          <option>Triple</option>
-          <option>Quad</option>
-          <option>Single</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Travel Date</label>
-        <input type="date" id="travelDate">
+        <label>Assign to Room</label>
+        <select id="memberRoomId" onchange="onRoomSelectChange(this)"></select>
       </div>
     </div>
 
@@ -294,14 +382,14 @@
     </div>
 
     <div class="field">
-      <label>Stage</label>
+      <label>Payment / Stage Status</label>
       <div class="stagepicker" id="stagePicker"></div>
     </div>
 
     <div class="field">
       <label>Documents</label>
       <div class="doclist" id="docList"></div>
-      <div class="docnote" id="docNote">Connect Google Drive above, then uploads save straight into a "Amana Operations Documents" folder in your Drive — accessible from any device.</div>
+      <div class="docnote" id="docNote">Connect Google Drive above, then uploads save straight into this traveler's folder in Drive.</div>
     </div>
 
     <div class="field">
@@ -310,11 +398,11 @@
     </div>
 
     <div class="sheetfoot">
-      <button class="btn-cancel" onclick="closeSheet()">Cancel</button>
-      <button class="btn-save" onclick="saveTrip()">Save</button>
+      <button class="btn-cancel" onclick="closeMemberSheet()">Cancel</button>
+      <button class="btn-save" onclick="saveMember()">Save</button>
     </div>
     <div class="sheetfoot" id="deleteRow" style="display:none;">
-      <button class="btn-danger" onclick="deleteTrip()">Delete Booking</button>
+      <button class="btn-danger" onclick="deleteMember()">Remove Traveler</button>
     </div>
   </div>
 </div>
@@ -329,9 +417,11 @@ const STAGE_BADGE = {
   "Traveled":"b-traveled",
   "Cancelled":"b-cancelled"
 };
-const STORE_KEY = "amana_ops_trips_v1";
-let trips = [];
+const STORE_KEY = "amana_ops_groups_v1";
+let groups = [];
 let activeFilter = "All";
+let viewMode = "groups"; // "groups" | "group"
+let currentGroupIdView = null;
 
 const DOC_TYPES = [
   {key:"passport", label:"Passport", multi:false},
@@ -341,10 +431,13 @@ const DOC_TYPES = [
   {key:"photos", label:"Photos", multi:true}
 ];
 let currentDocuments = {};
-let currentDriveFolderId = null; // Drive folder for the booking currently open in the sheet
+let currentDriveFolderId = null; // Drive folder for the member currently open in the sheet
+let currentStage = "Deposit Received";
+let pendingRoomAssignAfterCreate = false;
+let memberFormGroupId = null; // group currently selected inside the traveler form
+let roomContextGroupId = null; // group a room-create/edit action applies to
 
 // ===== GOOGLE DRIVE CONFIG =====
-// Paste your OAuth Client ID here after completing the Google Cloud setup steps.
 const GOOGLE_CLIENT_ID = "80675422060-il9qa500a8khq640usg7mb4gpqht9gdv.apps.googleusercontent.com";
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.file";
 const DRIVE_ROOT_FOLDER_NAME = "Amana Operations Documents";
@@ -361,7 +454,7 @@ function initGoogleDrive(){
   gTokenClient = google.accounts.oauth2.initTokenClient({
     client_id: GOOGLE_CLIENT_ID,
     scope: DRIVE_SCOPE,
-    callback: ""  // set per-call
+    callback: ""
   });
 }
 
@@ -433,24 +526,28 @@ async function ensureRootFolder(){
   return driveRootFolderId;
 }
 
-async function ensureTripFolder(tripId, tripLabel){
-  if(currentDriveFolderId) return currentDriveFolderId;
-  const rootId = await ensureRootFolder();
-  const folderName = `Booking_${tripId}` + (tripLabel ? ` - ${tripLabel}` : "");
-  const q = encodeURIComponent(`'${rootId}' in parents and name contains 'Booking_${tripId}' and trashed=false and mimeType='application/vnd.google-apps.folder'`);
+async function ensureNamedFolder(parentId, folderKey, folderLabel){
+  const q = encodeURIComponent(`'${parentId}' in parents and name contains '${folderKey}' and trashed=false and mimeType='application/vnd.google-apps.folder'`);
   const searchRes = await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`);
   const searchData = await searchRes.json();
   if(searchData.files && searchData.files.length){
-    currentDriveFolderId = searchData.files[0].id;
-  } else {
-    const createRes = await driveFetch("https://www.googleapis.com/drive/v3/files", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({name: folderName, mimeType:"application/vnd.google-apps.folder", parents:[rootId]})
-    });
-    const createData = await createRes.json();
-    currentDriveFolderId = createData.id;
+    return searchData.files[0].id;
   }
+  const createRes = await driveFetch("https://www.googleapis.com/drive/v3/files", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({name: folderLabel, mimeType:"application/vnd.google-apps.folder", parents:[parentId]})
+  });
+  const createData = await createRes.json();
+  return createData.id;
+}
+
+async function ensureMemberFolder(groupId, groupName, memberId, memberName){
+  if(currentDriveFolderId) return currentDriveFolderId;
+  const rootId = await ensureRootFolder();
+  const groupFolderId = await ensureNamedFolder(rootId, `Group_${groupId}`, `Group_${groupId} - ${groupName||"Unnamed Group"}`);
+  const memberFolderId = await ensureNamedFolder(groupFolderId, `Traveler_${memberId}`, `Traveler_${memberId} - ${memberName||"Unnamed"}`);
+  currentDriveFolderId = memberFolderId;
   return currentDriveFolderId;
 }
 
@@ -529,21 +626,23 @@ async function onDocFileChange(input, key){
   input.value = "";
   if(!files.length) return;
 
-  const tripId = document.getElementById("tripId").value;
+  const memberId = document.getElementById("memberId").value;
   const custName = document.getElementById("custName").value.trim();
+  const groupId = memberFormGroupId || currentGroupIdView;
+  const group = groups.find(g=>g.id===groupId);
+  const groupName = group ? group.groupName : "";
 
   for(const file of files){
     const placeholderId = "up_" + Date.now() + Math.random().toString(36).slice(2);
     addFileToDoc(key, {name:file.name, driveId:null, viewLink:null, uploading:true, tempId:placeholderId});
     try{
       await ensureToken();
-      const folderId = await ensureTripFolder(tripId, custName);
+      const folderId = await ensureMemberFolder(groupId, groupName, memberId, custName);
       const isImage = file.type && file.type.startsWith("image/");
       const blobOrFile = isImage ? await compressImageToBlob(file) : file;
       const uploadName = isImage ? (file.name.replace(/\.[^.]+$/, "") + ".jpg") : file.name;
       const result = await uploadFileToDrive(blobOrFile, uploadName, folderId);
 
-      const dt = DOC_TYPES.find(d=>d.key===key);
       const list = currentDocuments[key].files;
       const idx = list.findIndex(f=>f.tempId===placeholderId);
       if(idx>=0){
@@ -595,12 +694,16 @@ function renderDocs(){
   }).join("");
 }
 
+// ============ DATA HELPERS ============
 function load(){
-  try{ trips = JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
-  catch(e){ trips = []; }
+  try{ groups = JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+  catch(e){ groups = []; }
 }
 function persist(){
-  localStorage.setItem(STORE_KEY, JSON.stringify(trips));
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(groups));
+    return true;
+  } catch(e){ return false; }
 }
 
 function fmt(n){
@@ -613,33 +716,114 @@ function daysUntil(dateStr){
   const now = new Date(); now.setHours(0,0,0,0);
   return Math.round((d-now)/86400000);
 }
-
 function stageIndex(stage){
   if(stage==="Cancelled") return -1;
   return STAGES.indexOf(stage);
 }
+function memberBalance(m){
+  return (Number(m.totalPrice)||0) - (Number(m.depositAmt)||0) - (Number(m.finalPaidAmt)||0);
+}
+function docsReceivedCount(m){
+  const docsObj = m.documents || {};
+  return DOC_TYPES.filter(dt=> docsObj[dt.key] && docsObj[dt.key].status==="received").length;
+}
 
+// ============ NAVIGATION ============
+function goToGroups(){
+  viewMode = "groups";
+  currentGroupIdView = null;
+  activeFilter = "All";
+  document.getElementById("backRow").style.display = "none";
+  document.getElementById("headerSub").textContent = "Umrah Groups";
+  document.getElementById("groupHeadWrap").innerHTML = "";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchInput").placeholder = "Search group name...";
+  renderAll();
+}
+
+function openGroupView(groupId){
+  viewMode = "group";
+  currentGroupIdView = groupId;
+  activeFilter = "All";
+  document.getElementById("backRow").style.display = "flex";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchInput").placeholder = "Search traveler name, phone...";
+  renderAll();
+}
+
+function onFabClick(){
+  if(viewMode === "groups"){
+    openNewGroup();
+  } else {
+    if(groups.length === 0){ alert("Create an Umrah group first."); return; }
+    openNewMember();
+  }
+}
+
+// ============ RENDER: STATS ============
 function renderStats(){
-  const total = trips.filter(t=>t.stage!=="Cancelled").length;
-  const depositsHeld = trips.filter(t=>t.stage!=="Cancelled").reduce((s,t)=>s+(Number(t.depositAmt)||0),0);
-  const balanceOutstanding = trips.filter(t=>t.stage!=="Cancelled").reduce((s,t)=>{
-    const bal = (Number(t.totalPrice)||0) - (Number(t.depositAmt)||0) - (Number(t.finalPaidAmt)||0);
-    return s + Math.max(bal,0);
-  },0);
-  const dueSoon = trips.filter(t=>{
-    if(t.stage==="Cancelled" || t.stage==="Traveled") return false;
-    const d = daysUntil(t.balanceDueDate);
-    return d!==null && d<=14;
-  }).length;
+  const wrap = document.getElementById("statsRow");
+  if(viewMode === "groups"){
+    document.getElementById("liabilityBox").style.display = "block";
+    const totalGroups = groups.length;
+    let totalMembers = 0, depositsHeld = 0, balanceOutstanding = 0, dueSoon = 0;
+    groups.forEach(g=>{
+      (g.members||[]).forEach(m=>{
+        if(m.stage==="Cancelled") return;
+        totalMembers++;
+        depositsHeld += Number(m.depositAmt)||0;
+        const bal = memberBalance(m);
+        if(bal>0) balanceOutstanding += bal;
+        if(m.stage!=="Traveled"){
+          const d = daysUntil(m.balanceDueDate);
+          if(d!==null && d<=14) dueSoon++;
+        }
+      });
+    });
+    wrap.innerHTML = `
+      <div class="stat"><div class="n">${totalGroups}</div><div class="l">Groups</div></div>
+      <div class="stat"><div class="n">${totalMembers}</div><div class="l">Travelers</div></div>
+      <div class="stat warn"><div class="n">${fmt(depositsHeld)}</div><div class="l">Deposits Held</div></div>
+      <div class="stat alert"><div class="n">${dueSoon}</div><div class="l">Due ≤14 Days</div></div>
+    `;
+  } else {
+    document.getElementById("liabilityBox").style.display = "block";
+    const g = groups.find(x=>x.id===currentGroupIdView);
+    const members = g ? (g.members||[]) : [];
+    const active = members.filter(m=>m.stage!=="Cancelled");
+    const depositsHeld = active.reduce((s,m)=>s+(Number(m.depositAmt)||0),0);
+    const balanceOutstanding = active.reduce((s,m)=>{ const b=memberBalance(m); return s + Math.max(b,0); },0);
+    const dueSoon = active.filter(m=>{
+      if(m.stage==="Traveled") return false;
+      const d = daysUntil(m.balanceDueDate);
+      return d!==null && d<=14;
+    }).length;
+    wrap.innerHTML = `
+      <div class="stat"><div class="n">${active.length}</div><div class="l">Travelers</div></div>
+      <div class="stat warn"><div class="n">${fmt(depositsHeld)}</div><div class="l">Deposits Held</div></div>
+      <div class="stat ok"><div class="n">${fmt(balanceOutstanding)}</div><div class="l">Balance Due</div></div>
+      <div class="stat alert"><div class="n">${dueSoon}</div><div class="l">Due ≤14 Days</div></div>
+    `;
+  }
+}
 
-  document.getElementById("statsRow").innerHTML = `
-    <div class="stat"><div class="n">${total}</div><div class="l">Active Bookings</div></div>
-    <div class="stat warn"><div class="n">${fmt(depositsHeld)}</div><div class="l">Deposits Held</div></div>
-    <div class="stat ok"><div class="n">${fmt(balanceOutstanding)}</div><div class="l">Balance Due</div></div>
-    <div class="stat alert"><div class="n">${dueSoon}</div><div class="l">Due ≤14 Days</div></div>
+// ============ RENDER: GROUP HEADER (when inside a group) ============
+function renderGroupHead(){
+  const wrap = document.getElementById("groupHeadWrap");
+  if(viewMode !== "group"){ wrap.innerHTML = ""; return; }
+  const g = groups.find(x=>x.id===currentGroupIdView);
+  if(!g){ wrap.innerHTML = ""; return; }
+  document.getElementById("headerSub").textContent = g.groupName || "Unnamed Group";
+  wrap.innerHTML = `
+    <div class="grouphead">
+      <div class="gname">${g.groupName || "Unnamed Group"}</div>
+      <div class="gdates">Travel: ${g.travelDate||"—"} ${g.returnDate?(' → Return: '+g.returnDate):''}</div>
+      <button class="gedit" onclick="openEditGroup('${g.id}')">Edit Group Details</button>
+    </div>
   `;
 }
 
+// ============ RENDER: FILTERS ============
 function renderFilters(){
   const opts = ["All", ...STAGES, "Cancelled"];
   document.getElementById("filterRow").innerHTML = opts.map(o=>
@@ -648,76 +832,310 @@ function renderFilters(){
 }
 function setFilter(f){ activeFilter = f; renderList(); renderFilters(); }
 
+// ============ RENDER: MAIN LIST ============
+function renderAll(){
+  renderStats();
+  renderGroupHead();
+  renderRooms();
+  renderFilters();
+  renderList();
+}
+
 function renderList(){
+  const list = document.getElementById("mainList");
   const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  let rows = trips.filter(t=>{
-    if(activeFilter!=="All" && t.stage!==activeFilter) return false;
-    if(!q) return true;
-    return (t.custName||"").toLowerCase().includes(q) ||
-           (t.grpName||"").toLowerCase().includes(q) ||
-           (t.custPhone||"").toLowerCase().includes(q);
-  });
 
-  rows.sort((a,b)=>{
-    const da = a.travelDate || "9999";
-    const db = b.travelDate || "9999";
-    return da.localeCompare(db);
-  });
+  if(viewMode === "groups"){
+    let rows = groups.filter(g=>{
+      if(!q) return true;
+      return (g.groupName||"").toLowerCase().includes(q);
+    });
+    rows.sort((a,b)=> (a.travelDate||"9999").localeCompare(b.travelDate||"9999"));
 
-  const list = document.getElementById("tripList");
-  if(rows.length===0){
-    list.innerHTML = `<div class="empty">No bookings yet. Tap + to add one.</div>`;
+    if(rows.length===0){
+      list.innerHTML = `<div class="empty">No Umrah groups yet. Tap + to create one.</div>`;
+      return;
+    }
+
+    list.innerHTML = rows.map(g=>{
+      const members = g.members||[];
+      const active = members.filter(m=>m.stage!=="Cancelled");
+      const depositsHeld = active.reduce((s,m)=>s+(Number(m.depositAmt)||0),0);
+      const balanceOutstanding = active.reduce((s,m)=>{ const b=memberBalance(m); return s+Math.max(b,0); },0);
+      const dLeft = daysUntil(g.travelDate);
+      return `
+        <div class="card" onclick="openGroupView('${g.id}')">
+          <div class="top">
+            <div>
+              <div class="name">${g.groupName || "Unnamed Group"}</div>
+              <div class="grp">${active.length} traveler${active.length===1?'':'s'}</div>
+            </div>
+            <span class="badge b-deposit">${g.travelDate ? (dLeft!==null && dLeft>=0 ? dLeft+'d out' : g.travelDate) : 'No date'}</span>
+          </div>
+          <div class="rowline"><span class="k">Deposits Held</span><span class="v">${fmt(depositsHeld)}</span></div>
+          <div class="rowline"><span class="k">Balance Due</span><span class="v ${balanceOutstanding>0?'red':'green'}">${fmt(balanceOutstanding)}</span></div>
+        </div>
+      `;
+    }).join("");
     return;
   }
 
-  list.innerHTML = rows.map(t=>{
-    const idx = stageIndex(t.stage);
-    const balance = (Number(t.totalPrice)||0) - (Number(t.depositAmt)||0) - (Number(t.finalPaidAmt)||0);
-    const dLeft = daysUntil(t.travelDate);
-    const badgeClass = STAGE_BADGE[t.stage] || "b-deposit";
-    const segs = STAGES.map((s,i)=>`<div class="seg ${idx>=i?'on':''}"></div>`).join("");
-    const docsObj = t.documents || {};
-    const docsReceived = DOC_TYPES.filter(dt=> docsObj[dt.key] && docsObj[dt.key].status==="received").length;
+  // viewMode === "group"
+  const g = groups.find(x=>x.id===currentGroupIdView);
+  if(!g){ list.innerHTML = `<div class="empty">Group not found.</div>`; return; }
+  let rows = (g.members||[]).filter(m=>{
+    if(activeFilter!=="All" && m.stage!==activeFilter) return false;
+    if(!q) return true;
+    return (m.name||"").toLowerCase().includes(q) || (m.phone||"").toLowerCase().includes(q);
+  });
+  rows.sort((a,b)=> (a.name||"").localeCompare(b.name||""));
+
+  if(rows.length===0){
+    list.innerHTML = `<div class="empty">No travelers yet in this group. Tap + to add one.</div>`;
+    return;
+  }
+
+  list.innerHTML = rows.map(m=>{
+    const idx = stageIndex(m.stage);
+    const balance = memberBalance(m);
+    const badgeClass = STAGE_BADGE[m.stage] || "b-deposit";
+    const docsCount = docsReceivedCount(m);
+    const room = (g.rooms||[]).find(r=>r.id===m.roomId);
+    const roomLabel = room ? `${room.label} (${room.roomType})` : `<span class="noroom">Unassigned</span>`;
     return `
-      <div class="card" onclick="openEdit('${t.id}')">
+      <div class="card" onclick="openEditMember('${m.id}')">
         <div class="top">
           <div>
-            <div class="name">${t.custName||"Unnamed"}</div>
-            <div class="grp">${t.grpName||""} ${t.roomType?('· '+t.roomType):''}</div>
+            <div class="name">${m.name||"Unnamed"}</div>
+            <div class="grp">${roomLabel} ${m.phone?(' · '+m.phone):''}</div>
           </div>
-          <span class="badge ${badgeClass}">${t.stage}</span>
+          <span class="badge ${badgeClass}">${m.stage}</span>
         </div>
-        ${t.stage!=="Cancelled" ? `<div class="progress">${segs}</div>` : ""}
-        <div class="rowline"><span class="k">Travel Date</span><span class="v">${t.travelDate||"—"} ${dLeft!==null && dLeft>=0 ? `(${dLeft}d)`:''}</span></div>
-        <div class="rowline"><span class="k">Total / Deposit</span><span class="v">${fmt(t.totalPrice)} / ${fmt(t.depositAmt)}</span></div>
+        <div class="rowline"><span class="k">Total / Deposit</span><span class="v">${fmt(m.totalPrice)} / ${fmt(m.depositAmt)}</span></div>
         <div class="rowline"><span class="k">Balance Due</span><span class="v ${balance>0?'red':'green'}">${fmt(balance)}</span></div>
-        <div class="docbadgemini">📄 ${docsReceived}/${DOC_TYPES.length} docs</div>
+        <div class="docbadgemini">📄 ${docsCount}/${DOC_TYPES.length} docs</div>
       </div>
     `;
   }).join("");
 }
 
-function renderStagePicker(selected){
-  const all = [...STAGES, "Cancelled"];
-  document.getElementById("stagePicker").innerHTML = all.map(s=>
-    `<span class="${s===selected?'sel':''}" onclick="pickStage('${s}')">${s}</span>`
-  ).join("");
-}
-let currentStage = "Deposit Received";
-function pickStage(s){
-  currentStage = s;
-  renderStagePicker(s);
+document.getElementById("searchInput").addEventListener("input", renderList);
+
+// ============ ROOMS ============
+function roomCapacity(type){
+  return {Single:1, Double:2, Triple:3, Quad:4}[type] || 2;
 }
 
-function openNew(){
-  document.getElementById("sheetTitle").textContent = "New Booking";
-  document.getElementById("tripId").value = "t" + Date.now();
+function renderRooms(){
+  const wrap = document.getElementById("roomsWrap");
+  if(viewMode !== "group"){ wrap.innerHTML = ""; return; }
+  const g = groups.find(x=>x.id===currentGroupIdView);
+  if(!g){ wrap.innerHTML = ""; return; }
+  const rooms = g.rooms || [];
+  const members = g.members || [];
+
+  const roomCards = rooms.map(r=>{
+    const occupants = members.filter(m=>m.roomId===r.id && m.stage!=="Cancelled");
+    const names = occupants.length ? occupants.map(m=>m.name||"Unnamed").join(", ") : "";
+    return `
+      <div class="roomcard" onclick="openEditRoom('${r.id}')">
+        <div class="rlabel">${r.label||"Room"}</div>
+        <div class="rtype">${r.roomType} · ${occupants.length}/${roomCapacity(r.roomType)}</div>
+        ${names ? `<div class="roccupants">${names}</div>` : `<div class="rempty">Empty</div>`}
+      </div>
+    `;
+  }).join("");
+
+  wrap.innerHTML = `
+    <div class="roomssection">
+      <div class="rstitle">
+        <span>Rooms</span>
+        <button class="rsaddbtn" onclick="openNewRoom()">+ Add Room</button>
+      </div>
+      ${rooms.length ? `<div class="roomscroll">${roomCards}</div>` : `<div class="empty" style="padding:16px 0;">No rooms yet — add one before assigning travelers.</div>`}
+    </div>
+  `;
+}
+
+function openNewRoom(groupId){
+  roomContextGroupId = groupId || currentGroupIdView;
+  document.getElementById("roomSheetTitle").textContent = "New Room";
+  document.getElementById("roomId").value = "r" + Date.now();
+  document.getElementById("roomLabel").value = "";
+  document.getElementById("roomTypeSelect").value = "Double";
+  document.getElementById("roomDeleteRow").style.display = "none";
+  document.getElementById("roomOverlay").classList.add("show");
+}
+
+function openEditRoom(roomId, groupId){
+  roomContextGroupId = groupId || currentGroupIdView;
+  const g = groups.find(x=>x.id===roomContextGroupId);
+  if(!g) return;
+  const r = (g.rooms||[]).find(x=>x.id===roomId);
+  if(!r) return;
+  document.getElementById("roomSheetTitle").textContent = "Edit Room";
+  document.getElementById("roomId").value = r.id;
+  document.getElementById("roomLabel").value = r.label||"";
+  document.getElementById("roomTypeSelect").value = r.roomType||"Double";
+  document.getElementById("roomDeleteRow").style.display = "flex";
+  document.getElementById("roomOverlay").classList.add("show");
+}
+
+function closeRoomSheet(){
+  document.getElementById("roomOverlay").classList.remove("show");
+  pendingRoomAssignAfterCreate = false;
+}
+
+function saveRoom(){
+  const g = groups.find(x=>x.id===roomContextGroupId);
+  if(!g) return;
+  const id = document.getElementById("roomId").value || ("r"+Date.now());
+  const data = {
+    id,
+    label: document.getElementById("roomLabel").value.trim() || "Room",
+    roomType: document.getElementById("roomTypeSelect").value
+  };
+  if(!g.rooms) g.rooms = [];
+  const idx = g.rooms.findIndex(x=>x.id===id);
+  const isNew = idx<0;
+  if(idx>=0) g.rooms[idx] = data; else g.rooms.push(data);
+  if(!persist()){ alert("Couldn't save room — storage issue."); return; }
+
+  document.getElementById("roomOverlay").classList.remove("show");
+
+  if(pendingRoomAssignAfterCreate && isNew){
+    pendingRoomAssignAfterCreate = false;
+    populateRoomSelect(id);
+  }
+  renderRooms();
+  renderList();
+}
+
+function deleteRoom(){
+  const g = groups.find(x=>x.id===roomContextGroupId);
+  if(!g) return;
+  const id = document.getElementById("roomId").value;
+  if(!id) return;
+  const occupantCount = (g.members||[]).filter(m=>m.roomId===id).length;
+  const msg = occupantCount>0
+    ? `This room has ${occupantCount} traveler(s) assigned. Delete anyway? They'll become unassigned.`
+    : "Delete this room?";
+  if(!confirm(msg)) return;
+  g.rooms = (g.rooms||[]).filter(x=>x.id!==id);
+  (g.members||[]).forEach(m=>{ if(m.roomId===id) m.roomId = null; });
+  persist();
+  document.getElementById("roomOverlay").classList.remove("show");
+  renderRooms();
+  renderList();
+}
+
+function populateRoomSelect(selectedRoomId){
+  const g = groups.find(x=>x.id===memberFormGroupId);
+  const rooms = g ? (g.rooms||[]) : [];
+  const sel = document.getElementById("memberRoomId");
+  let opts = `<option value="">Unassigned</option>`;
+  opts += rooms.map(r=>`<option value="${r.id}">${r.label} (${r.roomType})</option>`).join("");
+  opts += `<option value="__new__">+ Create New Room…</option>`;
+  sel.innerHTML = opts;
+  sel.value = selectedRoomId || "";
+}
+
+function onRoomSelectChange(sel){
+  if(sel.value === "__new__"){
+    pendingRoomAssignAfterCreate = true;
+    openNewRoom(memberFormGroupId);
+    sel.value = "";
+  }
+}
+
+function populateGroupSelect(selectedGroupId){
+  const sel = document.getElementById("memberGroupId");
+  sel.innerHTML = groups.map(g=>
+    `<option value="${g.id}">${g.groupName || "Unnamed Group"}</option>`
+  ).join("");
+  sel.value = selectedGroupId || currentGroupIdView || "";
+}
+
+function onMemberGroupChange(sel){
+  memberFormGroupId = sel.value;
+  currentDriveFolderId = null; // moving groups means a new Drive folder on next upload
+  populateRoomSelect("");
+}
+
+// ============ GROUP SHEET ============
+function openNewGroup(){
+  document.getElementById("groupSheetTitle").textContent = "New Umrah Group";
+  document.getElementById("groupId").value = "g" + Date.now();
+  document.getElementById("groupName").value = "";
+  document.getElementById("groupTravelDate").value = "";
+  document.getElementById("groupReturnDate").value = "";
+  document.getElementById("groupNotes").value = "";
+  document.getElementById("groupDeleteRow").style.display = "none";
+  document.getElementById("groupOverlay").classList.add("show");
+}
+
+function openEditGroup(groupId){
+  const g = groups.find(x=>x.id===groupId);
+  if(!g) return;
+  document.getElementById("groupSheetTitle").textContent = "Edit Group";
+  document.getElementById("groupId").value = g.id;
+  document.getElementById("groupName").value = g.groupName||"";
+  document.getElementById("groupTravelDate").value = g.travelDate||"";
+  document.getElementById("groupReturnDate").value = g.returnDate||"";
+  document.getElementById("groupNotes").value = g.notes||"";
+  document.getElementById("groupDeleteRow").style.display = "flex";
+  document.getElementById("groupOverlay").classList.add("show");
+}
+
+function closeGroupSheet(){
+  document.getElementById("groupOverlay").classList.remove("show");
+}
+
+function saveGroup(){
+  const id = document.getElementById("groupId").value || ("g"+Date.now());
+  const existing = groups.find(x=>x.id===id);
+  const data = {
+    id,
+    groupName: document.getElementById("groupName").value.trim(),
+    travelDate: document.getElementById("groupTravelDate").value,
+    returnDate: document.getElementById("groupReturnDate").value,
+    notes: document.getElementById("groupNotes").value.trim(),
+    driveFolderId: existing ? existing.driveFolderId : null,
+    members: existing ? existing.members : [],
+    rooms: existing ? (existing.rooms || []) : []
+  };
+  const idx = groups.findIndex(x=>x.id===id);
+  if(idx>=0) groups[idx] = data; else groups.push(data);
+  if(!persist()){ alert("Couldn't save — storage issue. Try again."); return; }
+  closeGroupSheet();
+  if(viewMode==="group" && currentGroupIdView===id){
+    renderAll();
+  } else {
+    renderAll();
+  }
+}
+
+function deleteGroup(){
+  const id = document.getElementById("groupId").value;
+  if(!id) return;
+  if(!confirm("Delete this entire Umrah group and all its travelers? This cannot be undone.")) return;
+  groups = groups.filter(x=>x.id!==id);
+  persist();
+  closeGroupSheet();
+  goToGroups();
+}
+
+// ============ MEMBER SHEET ============
+function openNewMember(){
+  document.getElementById("memberSheetTitle").textContent = "New Traveler";
+  document.getElementById("memberId").value = "m" + Date.now();
+  document.getElementById("memberOriginGroupId").value = "";
+  memberFormGroupId = currentGroupIdView;
+  populateGroupSelect(currentGroupIdView);
   currentDriveFolderId = null;
   document.getElementById("custName").value = "";
   document.getElementById("custPhone").value = "";
-  document.getElementById("grpName").value = "";
-  document.getElementById("roomType").value = "Double";
-  document.getElementById("travelDate").value = "";
+  populateRoomSelect("");
   document.getElementById("totalPrice").value = "";
   document.getElementById("depositAmt").value = "";
   document.getElementById("depositDate").value = "";
@@ -729,37 +1147,51 @@ function openNew(){
   currentDocuments = blankDocuments();
   renderDocs();
   document.getElementById("deleteRow").style.display = "none";
-  document.getElementById("overlay").classList.add("show");
+  document.getElementById("memberOverlay").classList.add("show");
 }
 
-function openEdit(id){
-  const t = trips.find(x=>x.id===id);
-  if(!t) return;
-  document.getElementById("sheetTitle").textContent = "Edit Booking";
-  document.getElementById("tripId").value = t.id;
-  currentDriveFolderId = t.driveFolderId || null;
-  document.getElementById("custName").value = t.custName||"";
-  document.getElementById("custPhone").value = t.custPhone||"";
-  document.getElementById("grpName").value = t.grpName||"";
-  document.getElementById("roomType").value = t.roomType||"Double";
-  document.getElementById("travelDate").value = t.travelDate||"";
-  document.getElementById("totalPrice").value = t.totalPrice||"";
-  document.getElementById("depositAmt").value = t.depositAmt||"";
-  document.getElementById("depositDate").value = t.depositDate||"";
-  document.getElementById("balanceDueDate").value = t.balanceDueDate||"";
-  document.getElementById("finalPaidAmt").value = t.finalPaidAmt||"";
-  document.getElementById("notes").value = t.notes||"";
-  currentStage = t.stage||"Deposit Received";
+function openEditMember(memberId){
+  const g = groups.find(x=>x.id===currentGroupIdView);
+  if(!g) return;
+  const m = (g.members||[]).find(x=>x.id===memberId);
+  if(!m) return;
+  document.getElementById("memberSheetTitle").textContent = "Edit Traveler";
+  document.getElementById("memberId").value = m.id;
+  document.getElementById("memberOriginGroupId").value = currentGroupIdView;
+  memberFormGroupId = currentGroupIdView;
+  populateGroupSelect(currentGroupIdView);
+  currentDriveFolderId = m.driveFolderId || null;
+  document.getElementById("custName").value = m.name||"";
+  document.getElementById("custPhone").value = m.phone||"";
+  populateRoomSelect(m.roomId||"");
+  document.getElementById("totalPrice").value = m.totalPrice||"";
+  document.getElementById("depositAmt").value = m.depositAmt||"";
+  document.getElementById("depositDate").value = m.depositDate||"";
+  document.getElementById("balanceDueDate").value = m.balanceDueDate||"";
+  document.getElementById("finalPaidAmt").value = m.finalPaidAmt||"";
+  document.getElementById("notes").value = m.notes||"";
+  currentStage = m.stage||"Deposit Received";
   renderStagePicker(currentStage);
-  currentDocuments = t.documents ? JSON.parse(JSON.stringify(t.documents)) : blankDocuments();
+  currentDocuments = m.documents ? JSON.parse(JSON.stringify(m.documents)) : blankDocuments();
   DOC_TYPES.forEach(dt=>{ if(!currentDocuments[dt.key]) currentDocuments[dt.key] = {status:"pending", files:[]}; });
   renderDocs();
   document.getElementById("deleteRow").style.display = "flex";
-  document.getElementById("overlay").classList.add("show");
+  document.getElementById("memberOverlay").classList.add("show");
 }
 
-function closeSheet(){
-  document.getElementById("overlay").classList.remove("show");
+function closeMemberSheet(){
+  document.getElementById("memberOverlay").classList.remove("show");
+}
+
+function renderStagePicker(selected){
+  const all = [...STAGES, "Cancelled"];
+  document.getElementById("stagePicker").innerHTML = all.map(s=>
+    `<span class="${s===selected?'sel':''}" onclick="pickStage('${s}')">${s}</span>`
+  ).join("");
+}
+function pickStage(s){
+  currentStage = s;
+  renderStagePicker(s);
 }
 
 function documentsForStorage(docs){
@@ -773,16 +1205,18 @@ function documentsForStorage(docs){
   return out;
 }
 
-function saveTrip(){
-  const id = document.getElementById("tripId").value || ("t"+Date.now());
+function saveMember(){
+  const targetGroupId = document.getElementById("memberGroupId").value;
+  const targetGroup = groups.find(x=>x.id===targetGroupId);
+  if(!targetGroup){ alert("Pick a group for this traveler first."); return; }
+
+  const id = document.getElementById("memberId").value || ("m"+Date.now());
   const data = {
     id,
     driveFolderId: currentDriveFolderId,
-    custName: document.getElementById("custName").value.trim(),
-    custPhone: document.getElementById("custPhone").value.trim(),
-    grpName: document.getElementById("grpName").value.trim(),
-    roomType: document.getElementById("roomType").value,
-    travelDate: document.getElementById("travelDate").value,
+    name: document.getElementById("custName").value.trim(),
+    phone: document.getElementById("custPhone").value.trim(),
+    roomId: document.getElementById("memberRoomId").value || null,
     totalPrice: document.getElementById("totalPrice").value,
     depositAmt: document.getElementById("depositAmt").value,
     depositDate: document.getElementById("depositDate").value,
@@ -792,36 +1226,43 @@ function saveTrip(){
     stage: currentStage,
     documents: documentsForStorage(currentDocuments)
   };
-  const idx = trips.findIndex(x=>x.id===id);
-  if(idx>=0) trips[idx] = data; else trips.push(data);
-  try{
-    persist();
-  } catch(e){
-    alert("Couldn't save — this device's storage is full. Try removing a large photo from an older booking, then save again.");
+
+  const originGroupId = document.getElementById("memberOriginGroupId").value;
+  if(originGroupId && originGroupId !== targetGroupId){
+    // moved to a different group — remove from origin, add to target
+    const originGroup = groups.find(x=>x.id===originGroupId);
+    if(originGroup) originGroup.members = (originGroup.members||[]).filter(x=>x.id!==id);
+    if(!targetGroup.members) targetGroup.members = [];
+    targetGroup.members.push(data);
+  } else {
+    if(!targetGroup.members) targetGroup.members = [];
+    const idx = targetGroup.members.findIndex(x=>x.id===id);
+    if(idx>=0) targetGroup.members[idx] = data; else targetGroup.members.push(data);
+  }
+
+  if(!persist()){
+    alert("Couldn't save — this device's storage is full or unavailable.");
     return;
   }
-  closeSheet();
-  renderStats();
-  renderList();
+  closeMemberSheet();
+  renderAll();
 }
 
-function deleteTrip(){
-  const id = document.getElementById("tripId").value;
+function deleteMember(){
+  const g = groups.find(x=>x.id===currentGroupIdView);
+  if(!g) return;
+  const id = document.getElementById("memberId").value;
   if(!id) return;
-  if(!confirm("Delete this booking? This cannot be undone.")) return;
-  trips = trips.filter(x=>x.id!==id);
+  if(!confirm("Remove this traveler? This cannot be undone.")) return;
+  g.members = (g.members||[]).filter(x=>x.id!==id);
   persist();
-  closeSheet();
-  renderStats();
-  renderList();
+  closeMemberSheet();
+  renderAll();
 }
 
-document.getElementById("searchInput").addEventListener("input", renderList);
-
+// ============ INIT ============
 load();
-renderStats();
-renderFilters();
-renderList();
+goToGroups();
 updateDrivePill();
 initGoogleDrive();
 </script>
