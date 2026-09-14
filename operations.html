@@ -133,30 +133,6 @@
   .roomssection{margin:0 16px 12px;}
   .roomssection .rstitle{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;}
   .roomssection .rsaddbtn{font-size:11px; font-weight:700; color:var(--gold-d); background:none; border:none; padding:0;}
-
-  .itinsection{margin:0 16px 12px;}
-  .itinsection .rstitle{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;}
-  .itinsection .rsaddbtn{font-size:11px; font-weight:700; color:var(--gold-d); background:none; border:none; padding:0;}
-  .flightbox{
-    background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px;
-    display:grid; grid-template-columns:1fr 1fr; gap:10px;
-  }
-  .flightbox .fcol .flabel{font-size:9.5px; text-transform:uppercase; letter-spacing:.3px; color:var(--muted); font-weight:700; margin-bottom:2px;}
-  .flightbox .fcol .fval{font-size:12.5px; font-weight:600; color:var(--black);}
-  .flightbox .fcol .fsub{font-size:11px; color:var(--muted); margin-top:1px;}
-  .staycard{
-    background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:8px;
-  }
-  .staycard .sctop{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
-  .staycard .scname{font-weight:700; font-size:13.5px; color:var(--black);}
-  .staycard .sccity{font-size:10px; font-weight:700; color:var(--gold-d); text-transform:uppercase; letter-spacing:.3px;}
-  .staycard .scdates{font-size:11.5px; color:var(--muted); margin-top:3px;}
-  .staycard .scconf{font-size:11px; color:var(--muted); margin-top:2px;}
-  .staycard .scactions{display:flex; gap:8px; margin-top:8px;}
-  .staycard .scactions button{
-    font-size:11px; font-weight:700; padding:6px 10px; border-radius:7px; border:1px solid var(--line); background:#fafafa; color:var(--ink);
-  }
-  .staycard .scactions button.printbtn{color:var(--gold-d); border-color:var(--gold);}
   .roomscroll{display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;}
   .roomcard{
     flex:0 0 auto; min-width:130px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:9px 11px; cursor:pointer;
@@ -277,7 +253,7 @@
 </div>
 
 <div id="groupHeadWrap"></div>
-<div id="itineraryWrap"></div>
+<div id="roomsWrap"></div>
 
 <div class="searchwrap">
   <input type="text" id="searchInput" placeholder="Search...">
@@ -312,104 +288,12 @@
       <label>Notes</label>
       <textarea id="groupNotes" placeholder="Hotel, flights, or other group-level notes..."></textarea>
     </div>
-
-    <div class="field">
-      <label>Tour Guide Phone</label>
-      <input type="text" id="groupTourGuidePhone" placeholder="e.g. +966547220610">
-    </div>
-
-    <div class="field">
-      <label>Arrival Flight</label>
-      <div class="grid2">
-        <input type="text" id="arrivalAirline" placeholder="Airline">
-        <input type="text" id="arrivalFlightNo" placeholder="Flight #">
-      </div>
-      <div class="grid2" style="margin-top:8px;">
-        <input type="date" id="arrivalDate">
-        <input type="time" id="arrivalTime">
-      </div>
-      <div class="grid2" style="margin-top:8px;">
-        <input type="text" id="arrivalAirport" placeholder="Arrival Airport (e.g. Jeddah, Madina)">
-        <input type="number" id="arrivalPax" placeholder="# Passengers">
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Departure Flight</label>
-      <div class="grid2">
-        <input type="text" id="departureAirline" placeholder="Airline">
-        <input type="text" id="departureFlightNo" placeholder="Flight #">
-      </div>
-      <div class="grid2" style="margin-top:8px;">
-        <input type="date" id="departureDate">
-        <input type="time" id="departureTime">
-      </div>
-      <div class="grid2" style="margin-top:8px;">
-        <input type="text" id="departureAirport" placeholder="Departure Airport">
-        <input type="number" id="departurePax" placeholder="# Passengers">
-      </div>
-    </div>
-
     <div class="sheetfoot">
       <button class="btn-cancel" onclick="closeGroupSheet()">Cancel</button>
       <button class="btn-save" onclick="saveGroup()">Save</button>
     </div>
     <div class="sheetfoot" id="groupDeleteRow" style="display:none;">
       <button class="btn-danger" onclick="deleteGroup()">Delete Group</button>
-    </div>
-  </div>
-</div>
-
-<!-- City Stay Modal -->
-<div class="overlay" id="stayOverlay" style="z-index:105;">
-  <div class="sheet">
-    <div class="closebar"></div>
-    <h2 id="staySheetTitle">New Hotel Stay</h2>
-    <input type="hidden" id="stayId">
-    <div class="grid2">
-      <div class="field">
-        <label>City</label>
-        <select id="stayCity">
-          <option>Madina</option>
-          <option>Makkah</option>
-          <option>Istanbul</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Hotel Name</label>
-        <input type="text" id="stayHotelName" placeholder="e.g. Swissotel Al Maqam">
-      </div>
-    </div>
-    <div class="field">
-      <label>Hotel Phone</label>
-      <input type="text" id="stayHotelPhone" placeholder="e.g. +966148290055">
-    </div>
-    <div class="grid2">
-      <div class="field">
-        <label>Check-in Date</label>
-        <input type="date" id="stayCheckIn">
-      </div>
-      <div class="field">
-        <label>Check-out Date</label>
-        <input type="date" id="stayCheckOut">
-      </div>
-    </div>
-    <div class="field">
-      <label>Booking Confirmation Number</label>
-      <input type="text" id="stayConfirmation" placeholder="e.g. H260721121563050">
-    </div>
-    <div class="field">
-      <label>Booking Documents (voucher, confirmation PDF)</label>
-      <div class="doclist" id="stayDocList"></div>
-      <div class="docnote">Uploads save to this group's Drive folder under this hotel stay.</div>
-    </div>
-    <div class="sheetfoot">
-      <button class="btn-cancel" onclick="closeStaySheet()">Cancel</button>
-      <button class="btn-save" onclick="saveStay()">Save</button>
-    </div>
-    <div class="sheetfoot" id="stayDeleteRow" style="display:none;">
-      <button class="btn-danger" onclick="deleteStay()">Delete Stay</button>
     </div>
   </div>
 </div>
@@ -459,13 +343,15 @@
       <select id="memberGroupId" onchange="onMemberGroupChange(this)"></select>
     </div>
     <input type="hidden" id="memberOriginGroupId">
-    <div class="field">
-      <label>Phone</label>
-      <input type="text" id="custPhone" placeholder="718-...">
-    </div>
-    <div class="field">
-      <label>Room Assignments</label>
-      <div id="memberRoomAssignments"></div>
+    <div class="grid2">
+      <div class="field">
+        <label>Phone</label>
+        <input type="text" id="custPhone" placeholder="718-...">
+      </div>
+      <div class="field">
+        <label>Assign to Room</label>
+        <select id="memberRoomId" onchange="onRoomSelectChange(this)"></select>
+      </div>
     </div>
 
     <div class="grid2">
@@ -550,7 +436,6 @@ let currentStage = "Deposit Received";
 let pendingRoomAssignAfterCreate = false;
 let memberFormGroupId = null; // group currently selected inside the traveler form
 let roomContextGroupId = null; // group a room-create/edit action applies to
-let roomContextStayId = null; // hotel stay a room-create/edit action applies to
 
 // ===== GOOGLE DRIVE CONFIG =====
 const GOOGLE_CLIENT_ID = "80675422060-il9qa500a8khq640usg7mb4gpqht9gdv.apps.googleusercontent.com";
@@ -851,7 +736,6 @@ function goToGroups(){
   document.getElementById("backRow").style.display = "none";
   document.getElementById("headerSub").textContent = "Umrah Groups";
   document.getElementById("groupHeadWrap").innerHTML = "";
-  document.getElementById("itineraryWrap").innerHTML = "";
   document.getElementById("searchInput").value = "";
   document.getElementById("searchInput").placeholder = "Search group name...";
   renderAll();
@@ -935,10 +819,6 @@ function renderGroupHead(){
       <div class="gname">${g.groupName || "Unnamed Group"}</div>
       <div class="gdates">Travel: ${g.travelDate||"—"} ${g.returnDate?(' → Return: '+g.returnDate):''}</div>
       <button class="gedit" onclick="openEditGroup('${g.id}')">Edit Group Details</button>
-      <div style="display:flex; gap:14px; margin-top:6px;">
-        <button class="gedit" onclick="printTravelerRoster('${g.id}')">Print Traveler Roster</button>
-        <button class="gedit" onclick="printFinancialSummary('${g.id}')">Print Financial Summary</button>
-      </div>
     </div>
   `;
 }
@@ -956,7 +836,7 @@ function setFilter(f){ activeFilter = f; renderList(); renderFilters(); }
 function renderAll(){
   renderStats();
   renderGroupHead();
-  renderItinerary();
+  renderRooms();
   renderFilters();
   renderList();
 }
@@ -1020,23 +900,8 @@ function renderList(){
     const balance = memberBalance(m);
     const badgeClass = STAGE_BADGE[m.stage] || "b-deposit";
     const docsCount = docsReceivedCount(m);
-    const stays = g.cityStays || [];
-    const assignments = m.roomAssignments || {};
-    const assignedStays = stays.filter(s => assignments[s.id]);
-    let roomLabel;
-    if(!stays.length){
-      roomLabel = `<span class="noroom">No hotel stays yet</span>`;
-    } else if(assignedStays.length === 0){
-      roomLabel = `<span class="noroom">Unassigned</span>`;
-    } else {
-      roomLabel = assignedStays.map(s=>{
-        const r = (s.rooms||[]).find(rm=>rm.id===assignments[s.id]);
-        return `${s.city}: ${r ? r.label : "?"}`;
-      }).join(" · ");
-      if(assignedStays.length < stays.length){
-        roomLabel += ` <span class="noroom">(+${stays.length-assignedStays.length} unassigned)</span>`;
-      }
-    }
+    const room = (g.rooms||[]).find(r=>r.id===m.roomId);
+    const roomLabel = room ? `${room.label} (${room.roomType})` : `<span class="noroom">Unassigned</span>`;
     return `
       <div class="card" onclick="openEditMember('${m.id}')">
         <div class="top">
@@ -1048,10 +913,7 @@ function renderList(){
         </div>
         <div class="rowline"><span class="k">Total / Deposit</span><span class="v">${fmt(m.totalPrice)} / ${fmt(m.depositAmt)}</span></div>
         <div class="rowline"><span class="k">Balance Due</span><span class="v ${balance>0?'red':'green'}">${fmt(balance)}</span></div>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div class="docbadgemini">📄 ${docsCount}/${DOC_TYPES.length} docs</div>
-          <button onclick="event.stopPropagation(); printIdBadge('${m.id}')" style="font-size:10.5px; font-weight:700; color:var(--gold-d); background:none; border:1px solid var(--gold); border-radius:14px; padding:4px 10px;">🪪 Print ID</button>
-        </div>
+        <div class="docbadgemini">📄 ${docsCount}/${DOC_TYPES.length} docs</div>
       </div>
     `;
   }).join("");
@@ -1059,468 +921,44 @@ function renderList(){
 
 document.getElementById("searchInput").addEventListener("input", renderList);
 
-// ============ ITINERARY (Flights + Hotel Stays) ============
-let currentStayDocuments = [];
-let currentStayDriveFolderId = null;
-let currentStayGroupId = null;
+// ============ ROOMS ============
+function roomCapacity(type){
+  return {Single:1, Double:2, Triple:3, Quad:4}[type] || 2;
+}
 
-function fmtDate(d){ return d || "—"; }
-function fmtTime(t){ return t || ""; }
-
-function renderItinerary(){
-  const wrap = document.getElementById("itineraryWrap");
+function renderRooms(){
+  const wrap = document.getElementById("roomsWrap");
   if(viewMode !== "group"){ wrap.innerHTML = ""; return; }
   const g = groups.find(x=>x.id===currentGroupIdView);
   if(!g){ wrap.innerHTML = ""; return; }
-
-  const a = g.arrival || {}, d = g.departure || {};
-  const hasFlights = a.airline || a.flightNo || d.airline || d.flightNo;
-  const flightHtml = hasFlights ? `
-    <div class="flightbox">
-      <div class="fcol">
-        <div class="flabel">Arrival</div>
-        <div class="fval">${a.airline||"—"} ${a.flightNo||""}</div>
-        <div class="fsub">${fmtDate(a.date)} ${fmtTime(a.time)} · ${a.airport||"—"}</div>
-        <div class="fsub">${a.pax?a.pax+" pax":""}</div>
-      </div>
-      <div class="fcol">
-        <div class="flabel">Departure</div>
-        <div class="fval">${d.airline||"—"} ${d.flightNo||""}</div>
-        <div class="fsub">${fmtDate(d.date)} ${fmtTime(d.time)} · ${d.airport||"—"}</div>
-        <div class="fsub">${d.pax?d.pax+" pax":""}</div>
-      </div>
-    </div>
-  ` : "";
-
-  const stays = g.cityStays || [];
+  const rooms = g.rooms || [];
   const members = g.members || [];
-  const stayCards = stays.map(s=>{
-    const docCount = (s.documents||[]).length;
-    const rooms = s.rooms || [];
-    const roomChips = rooms.map(r=>{
-      const occupants = members.filter(m=> (m.roomAssignments||{})[s.id]===r.id && m.stage!=="Cancelled");
-      const names = occupants.length ? occupants.map(m=>m.name||"Unnamed").join(", ") : "Empty";
-      return `
-        <div class="roomcard" onclick="openEditRoom('${r.id}','${g.id}','${s.id}')">
-          <div class="rlabel">${r.label||"Room"}</div>
-          <div class="rtype">${r.roomType} · ${occupants.length}/${roomCapacity(r.roomType)}</div>
-          <div class="${occupants.length?'roccupants':'rempty'}">${names}</div>
-        </div>
-      `;
-    }).join("");
+
+  const roomCards = rooms.map(r=>{
+    const occupants = members.filter(m=>m.roomId===r.id && m.stage!=="Cancelled");
+    const names = occupants.length ? occupants.map(m=>m.name||"Unnamed").join(", ") : "";
     return `
-      <div class="staycard">
-        <div class="sctop">
-          <div>
-            <div class="sccity">${s.city}</div>
-            <div class="scname">${s.hotelName||"Hotel TBD"}</div>
-          </div>
-        </div>
-        <div class="scdates">Check-in: ${fmtDate(s.checkIn)} → Check-out: ${fmtDate(s.checkOut)}</div>
-        ${s.confirmation ? `<div class="scconf">Confirmation #: ${s.confirmation}</div>` : ""}
-        <div class="scconf">📄 ${docCount} document${docCount===1?"":"s"}</div>
-        <div class="scactions">
-          <button onclick="openEditStay('${s.id}')">Edit Stay</button>
-          <button class="printbtn" onclick="printRoomingList('${s.id}')">Print Rooming List</button>
-        </div>
-        <div style="margin-top:10px;">
-          <div class="rstitle" style="margin-bottom:6px;">
-            <span>Rooms at this hotel</span>
-            <button class="rsaddbtn" onclick="openNewRoom('${g.id}','${s.id}')">+ Add Room</button>
-          </div>
-          ${rooms.length ? `<div class="roomscroll">${roomChips}</div>` : `<div class="empty" style="padding:8px 0;">No rooms yet for this hotel.</div>`}
-        </div>
+      <div class="roomcard" onclick="openEditRoom('${r.id}')">
+        <div class="rlabel">${r.label||"Room"}</div>
+        <div class="rtype">${r.roomType} · ${occupants.length}/${roomCapacity(r.roomType)}</div>
+        ${names ? `<div class="roccupants">${names}</div>` : `<div class="rempty">Empty</div>`}
       </div>
     `;
   }).join("");
 
   wrap.innerHTML = `
-    <div class="itinsection">
-      <div class="rstitle"><span>Flight Schedule</span></div>
-      ${flightHtml || `<div class="empty" style="padding:10px 0;">No flight info yet — add it under "Edit Group Details."</div>`}
-    </div>
-    <div class="itinsection">
+    <div class="roomssection">
       <div class="rstitle">
-        <span>Hotel Stays</span>
-        <button class="rsaddbtn" onclick="openNewStay()">+ Add Hotel Stay</button>
+        <span>Rooms</span>
+        <button class="rsaddbtn" onclick="openNewRoom()">+ Add Room</button>
       </div>
-      ${stays.length ? stayCards : `<div class="empty" style="padding:10px 0;">No hotel stays yet — add Madina, Makkah, Istanbul, etc.</div>`}
+      ${rooms.length ? `<div class="roomscroll">${roomCards}</div>` : `<div class="empty" style="padding:16px 0;">No rooms yet — add one before assigning travelers.</div>`}
     </div>
   `;
 }
 
-function openNewStay(){
-  currentStayGroupId = currentGroupIdView;
-  document.getElementById("staySheetTitle").textContent = "New Hotel Stay";
-  document.getElementById("stayId").value = "s" + Date.now();
-  document.getElementById("stayCity").value = "Madina";
-  document.getElementById("stayHotelName").value = "";
-  document.getElementById("stayHotelPhone").value = "";
-  document.getElementById("stayCheckIn").value = "";
-  document.getElementById("stayCheckOut").value = "";
-  document.getElementById("stayConfirmation").value = "";
-  currentStayDriveFolderId = null;
-  currentStayDocuments = [];
-  renderStayDocs();
-  document.getElementById("stayDeleteRow").style.display = "none";
-  document.getElementById("stayOverlay").classList.add("show");
-}
-
-function openEditStay(stayId){
-  const g = groups.find(x=>x.id===currentGroupIdView);
-  if(!g) return;
-  const s = (g.cityStays||[]).find(x=>x.id===stayId);
-  if(!s) return;
-  currentStayGroupId = currentGroupIdView;
-  document.getElementById("staySheetTitle").textContent = "Edit Hotel Stay";
-  document.getElementById("stayId").value = s.id;
-  document.getElementById("stayCity").value = s.city||"Madina";
-  document.getElementById("stayHotelName").value = s.hotelName||"";
-  document.getElementById("stayHotelPhone").value = s.hotelPhone||"";
-  document.getElementById("stayCheckIn").value = s.checkIn||"";
-  document.getElementById("stayCheckOut").value = s.checkOut||"";
-  document.getElementById("stayConfirmation").value = s.confirmation||"";
-  currentStayDriveFolderId = s.driveFolderId || null;
-  currentStayDocuments = s.documents ? JSON.parse(JSON.stringify(s.documents)) : [];
-  renderStayDocs();
-  document.getElementById("stayDeleteRow").style.display = "flex";
-  document.getElementById("stayOverlay").classList.add("show");
-}
-
-function closeStaySheet(){
-  document.getElementById("stayOverlay").classList.remove("show");
-}
-
-function renderStayDocs(){
-  const wrap = document.getElementById("stayDocList");
-  const thumbs = currentStayDocuments.map((f, idx)=>{
-    let inner;
-    if(f.uploading){
-      inner = `<div class="uploading">…</div>`;
-    } else if(f.viewLink){
-      inner = `<div class="filepill" onclick="window.open('${f.viewLink}','_blank')" style="cursor:pointer;">${(f.name||"file").slice(0,10)}</div>`;
-    } else {
-      inner = `<div class="filepill">${(f.name||"file").slice(0,10)}</div>`;
-    }
-    return `<div class="thumb">${inner}${!f.uploading?`<div class="rm" onclick="removeStayDoc(${idx})">×</div>`:""}</div>`;
-  }).join("");
-  wrap.innerHTML = `
-    <div class="docrow">
-      <div class="doctop"><span class="doclabel">Booking Documents</span></div>
-      <div class="docactions">
-        <label class="filebtn">+ Add
-          <input type="file" accept="image/*,.pdf" multiple onchange="onStayDocChange(this)">
-        </label>
-      </div>
-      ${thumbs ? `<div class="thumbrow">${thumbs}</div>` : ""}
-    </div>
-  `;
-}
-
-function removeStayDoc(idx){
-  currentStayDocuments.splice(idx,1);
-  renderStayDocs();
-}
-
-async function onStayDocChange(input){
-  const files = Array.from(input.files||[]);
-  input.value = "";
-  if(!files.length) return;
-
-  const stayId = document.getElementById("stayId").value;
-  const city = document.getElementById("stayCity").value;
-  const hotelName = document.getElementById("stayHotelName").value.trim();
-  const g = groups.find(x=>x.id===currentStayGroupId);
-  const groupName = g ? g.groupName : "";
-
-  for(const file of files){
-    const placeholderId = "up_" + Date.now() + Math.random().toString(36).slice(2);
-    currentStayDocuments.push({name:file.name, driveId:null, viewLink:null, uploading:true, tempId:placeholderId});
-    renderStayDocs();
-    try{
-      await ensureToken();
-      const rootId = await ensureRootFolder();
-      const groupFolderId = await ensureNamedFolder(rootId, `Group_${currentStayGroupId}`, `Group_${currentStayGroupId} - ${groupName||"Unnamed Group"}`);
-      const stayFolderId = await ensureNamedFolder(groupFolderId, `Stay_${stayId}`, `Stay_${stayId} - ${city} - ${hotelName||"Hotel"}`);
-      currentStayDriveFolderId = stayFolderId;
-      const isImage = file.type && file.type.startsWith("image/");
-      const blobOrFile = isImage ? await compressImageToBlob(file) : file;
-      const uploadName = isImage ? (file.name.replace(/\.[^.]+$/, "") + ".jpg") : file.name;
-      const result = await uploadFileToDrive(blobOrFile, uploadName, stayFolderId);
-      const idx = currentStayDocuments.findIndex(f=>f.tempId===placeholderId);
-      if(idx>=0) currentStayDocuments[idx] = {name: result.name, driveId: result.id, viewLink: result.webViewLink};
-      renderStayDocs();
-    } catch(err){
-      const idx = currentStayDocuments.findIndex(f=>f.tempId===placeholderId);
-      if(idx>=0) currentStayDocuments.splice(idx,1);
-      renderStayDocs();
-      alert("Upload failed — check your Google Drive connection and try again.");
-    }
-  }
-}
-
-function saveStay(){
-  const g = groups.find(x=>x.id===currentStayGroupId);
-  if(!g) return;
-  const id = document.getElementById("stayId").value || ("s"+Date.now());
-  const data = {
-    id,
-    city: document.getElementById("stayCity").value,
-    hotelName: document.getElementById("stayHotelName").value.trim(),
-    hotelPhone: document.getElementById("stayHotelPhone").value.trim(),
-    checkIn: document.getElementById("stayCheckIn").value,
-    checkOut: document.getElementById("stayCheckOut").value,
-    confirmation: document.getElementById("stayConfirmation").value.trim(),
-    driveFolderId: currentStayDriveFolderId,
-    documents: currentStayDocuments.filter(f=>!f.uploading).map(f=>({name:f.name, driveId:f.driveId, viewLink:f.viewLink}))
-  };
-  if(!g.cityStays) g.cityStays = [];
-  const idx = g.cityStays.findIndex(x=>x.id===id);
-  if(idx>=0) g.cityStays[idx] = data; else g.cityStays.push(data);
-  if(!persist()){ alert("Couldn't save — storage issue."); return; }
-  closeStaySheet();
-  renderItinerary();
-}
-
-function deleteStay(){
-  const g = groups.find(x=>x.id===currentStayGroupId);
-  if(!g) return;
-  const id = document.getElementById("stayId").value;
-  if(!id) return;
-  if(!confirm("Delete this hotel stay?")) return;
-  g.cityStays = (g.cityStays||[]).filter(x=>x.id!==id);
-  persist();
-  document.getElementById("stayOverlay").classList.remove("show");
-  renderItinerary();
-}
-
-function printRoomingList(stayId){
-  const g = groups.find(x=>x.id===currentGroupIdView);
-  if(!g) return;
-  const s = (g.cityStays||[]).find(x=>x.id===stayId);
-  if(!s) return;
-  const rooms = s.rooms || [];
-  const members = g.members || [];
-
-  const rows = rooms.map(r=>{
-    const occupants = members.filter(m=> (m.roomAssignments||{})[stayId]===r.id && m.stage!=="Cancelled");
-    const names = occupants.length ? occupants.map(m=>m.name||"Unnamed").join("<br>") : "—";
-    return `<tr><td>${r.label}</td><td>${r.roomType}</td><td>${names}</td></tr>`;
-  }).join("");
-
-  const unassigned = members.filter(m=> !(m.roomAssignments||{})[stayId] && m.stage!=="Cancelled");
-  const unassignedRow = unassigned.length ? `<tr><td colspan="2"><b>Unassigned</b></td><td>${unassigned.map(m=>m.name||"Unnamed").join("<br>")}</td></tr>` : "";
-
-  const html = `
-    <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Rooming List</title>
-    <style>
-      body{font-family:Arial,sans-serif; padding:30px; color:#111;}
-      h1{font-size:20px; margin-bottom:2px;}
-      .sub{color:#555; font-size:13px; margin-bottom:16px;}
-      table{width:100%; border-collapse:collapse; margin-top:14px;}
-      th,td{border:1px solid #ccc; padding:8px 10px; font-size:13px; text-align:left; vertical-align:top;}
-      th{background:#f2ede0;}
-    </style>
-    </head><body>
-      <h1>${g.groupName || "Umrah Group"} — Rooming List</h1>
-      <div class="sub">
-        <b>${s.city}:</b> ${s.hotelName || "Hotel TBD"}<br>
-        Check-in: ${fmtDate(s.checkIn)} &nbsp;&nbsp; Check-out: ${fmtDate(s.checkOut)}<br>
-        ${s.confirmation ? "Confirmation #: " + s.confirmation + "<br>" : ""}
-      </div>
-      <table>
-        <tr><th>Room</th><th>Type</th><th>Occupants</th></tr>
-        ${rows}
-        ${unassignedRow}
-      </table>
-    </body></html>
-  `;
-  const w = window.open("", "_blank");
-  w.document.write(html);
-  w.document.close();
-  w.focus();
-  setTimeout(()=> w.print(), 300);
-}
-
-// ============ ID BADGE / ROSTER / FINANCIAL REPORTS ============
-async function fetchDriveImageDataUrl(fileId){
-  if(!fileId || !accessToken) return null;
-  try{
-    const res = await driveFetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`);
-    if(!res.ok) return null;
-    const blob = await res.blob();
-    return await new Promise((resolve)=>{
-      const reader = new FileReader();
-      reader.onload = ()=> resolve(reader.result);
-      reader.onerror = ()=> resolve(null);
-      reader.readAsDataURL(blob);
-    });
-  } catch(e){ return null; }
-}
-
-async function printIdBadge(memberId){
-  const g = groups.find(x=>x.id===currentGroupIdView);
-  if(!g) return;
-  const m = (g.members||[]).find(x=>x.id===memberId);
-  if(!m) return;
-
-  let photoDataUrl = null;
-  const photoDoc = m.documents && m.documents.photos;
-  if(photoDoc && photoDoc.files && photoDoc.files.length){
-    if(!accessToken){
-      alert("Connect Google Drive first to pull this traveler's photo into the badge. Printing without photo for now.");
-    } else {
-      photoDataUrl = await fetchDriveImageDataUrl(photoDoc.files[0].driveId);
-    }
-  }
-
-  const stays = g.cityStays || [];
-  const stayRows = stays.map(s=> `
-    <div class="brow"><b>${(s.city||"").toUpperCase()}:</b> ${s.hotelName||"—"}</div>
-    <div class="brow sub">HOTEL: ${s.hotelPhone||"—"}</div>
-  `).join("");
-
-  const html = `
-    <!DOCTYPE html><html><head><meta charset="UTF-8"><title>ID Badge — ${m.name||"Traveler"}</title>
-    <style>
-      body{font-family:Arial,sans-serif; padding:30px; color:#111;}
-      .badge{width:380px; border:2px solid #c9a227; border-radius:10px; padding:18px; }
-      .header{font-size:18px; font-weight:800; letter-spacing:.5px;}
-      .header .sub{font-size:11px; color:#666; font-weight:600;}
-      .photo{width:120px; height:150px; border:1px solid #999; margin:12px 0; background:#f4f4f4; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999;}
-      .photo img{width:100%; height:100%; object-fit:cover;}
-      .name{font-size:16px; font-weight:800; margin:8px 0;}
-      .brow{font-size:12.5px; margin-top:4px;}
-      .brow.sub{color:#555; margin-bottom:6px;}
-      .tourguide{margin-top:10px; font-size:12.5px;}
-    </style>
-    </head><body>
-      <div class="badge">
-        <div class="header">AMANA<div class="sub">HAJJ &amp; UMRAH TRAVEL</div></div>
-        <div class="photo">${photoDataUrl ? `<img src="${photoDataUrl}">` : "No photo"}</div>
-        <div class="name">NAME: ${m.name||"—"}</div>
-        <div class="tourguide"><b>TOUR GUIDE:</b> ${g.tourGuidePhone||"—"}</div>
-        ${stayRows}
-      </div>
-    </body></html>
-  `;
-  const w = window.open("", "_blank");
-  w.document.write(html);
-  w.document.close();
-  w.focus();
-  setTimeout(()=> w.print(), 300);
-}
-
-function printTravelerRoster(groupId){
-  const g = groups.find(x=>x.id===groupId);
-  if(!g) return;
-  const members = (g.members||[]).filter(m=>m.stage!=="Cancelled");
-  const stays = g.cityStays || [];
-
-  const rows = members.map(m=>{
-    const roomsText = stays.map(s=>{
-      const rid = (m.roomAssignments||{})[s.id];
-      const r = rid ? (s.rooms||[]).find(rm=>rm.id===rid) : null;
-      return `${s.city}: ${r ? r.label : "—"}`;
-    }).join("<br>");
-    const docsCount = docsReceivedCount(m);
-    return `<tr>
-      <td>${m.name||"Unnamed"}</td>
-      <td>${m.phone||"—"}</td>
-      <td>${roomsText||"—"}</td>
-      <td>${m.stage}</td>
-      <td>${docsCount}/${DOC_TYPES.length}</td>
-    </tr>`;
-  }).join("");
-
-  const html = `
-    <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Traveler Roster</title>
-    <style>
-      body{font-family:Arial,sans-serif; padding:30px; color:#111;}
-      h1{font-size:20px; margin-bottom:2px;}
-      .sub{color:#555; font-size:13px; margin-bottom:16px;}
-      table{width:100%; border-collapse:collapse; margin-top:14px;}
-      th,td{border:1px solid #ccc; padding:7px 9px; font-size:12.5px; text-align:left; vertical-align:top;}
-      th{background:#f2ede0;}
-    </style>
-    </head><body>
-      <h1>${g.groupName || "Umrah Group"} — Traveler Roster</h1>
-      <div class="sub">Travel: ${fmtDate(g.travelDate)} → Return: ${fmtDate(g.returnDate)} &nbsp; · &nbsp; ${members.length} traveler(s)</div>
-      <table>
-        <tr><th>Name</th><th>Phone</th><th>Room(s)</th><th>Stage</th><th>Docs</th></tr>
-        ${rows}
-      </table>
-    </body></html>
-  `;
-  const w = window.open("", "_blank");
-  w.document.write(html);
-  w.document.close();
-  w.focus();
-  setTimeout(()=> w.print(), 300);
-}
-
-function printFinancialSummary(groupId){
-  const g = groups.find(x=>x.id===groupId);
-  if(!g) return;
-  const members = (g.members||[]).filter(m=>m.stage!=="Cancelled");
-
-  let totalPrice=0, totalDeposit=0, totalFinal=0, totalBalance=0;
-  const rows = members.map(m=>{
-    const price = Number(m.totalPrice)||0;
-    const dep = Number(m.depositAmt)||0;
-    const fin = Number(m.finalPaidAmt)||0;
-    const bal = memberBalance(m);
-    totalPrice += price; totalDeposit += dep; totalFinal += fin; totalBalance += Math.max(bal,0);
-    return `<tr>
-      <td>${m.name||"Unnamed"}</td>
-      <td>${fmt(price)}</td>
-      <td>${fmt(dep)}</td>
-      <td>${fmt(fin)}</td>
-      <td>${fmt(bal)}</td>
-      <td>${m.stage}</td>
-    </tr>`;
-  }).join("");
-
-  const html = `
-    <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Financial Summary</title>
-    <style>
-      body{font-family:Arial,sans-serif; padding:30px; color:#111;}
-      h1{font-size:20px; margin-bottom:2px;}
-      .sub{color:#555; font-size:13px; margin-bottom:16px;}
-      table{width:100%; border-collapse:collapse; margin-top:14px;}
-      th,td{border:1px solid #ccc; padding:7px 9px; font-size:12.5px; text-align:left;}
-      th{background:#f2ede0;}
-      tfoot td{font-weight:700; background:#faf7ef;}
-      .note{margin-top:14px; font-size:11.5px; color:#886b00; background:#fdf6e3; border:1px solid #eddca0; padding:8px 10px; border-radius:6px;}
-    </style>
-    </head><body>
-      <h1>${g.groupName || "Umrah Group"} — Financial Summary</h1>
-      <div class="sub">Travel: ${fmtDate(g.travelDate)} → Return: ${fmtDate(g.returnDate)}</div>
-      <table>
-        <tr><th>Name</th><th>Total Price</th><th>Deposit</th><th>Final Paid</th><th>Balance Due</th><th>Stage</th></tr>
-        ${rows}
-        <tfoot>
-          <tr><td>TOTAL</td><td>${fmt(totalPrice)}</td><td>${fmt(totalDeposit)}</td><td>${fmt(totalFinal)}</td><td>${fmt(totalBalance)}</td><td></td></tr>
-        </tfoot>
-      </table>
-      <div class="note">Deposits and final payments received are customer liabilities until travel is completed — not available operating cash.</div>
-    </body></html>
-  `;
-  const w = window.open("", "_blank");
-  w.document.write(html);
-  w.document.close();
-  w.focus();
-  setTimeout(()=> w.print(), 300);
-}
-
-// ============ ROOMS (scoped per Hotel Stay) ============
-function roomCapacity(type){
-  return {Single:1, Double:2, Triple:3, Quad:4}[type] || 2;
-}
-
-function openNewRoom(groupId, stayId){
+function openNewRoom(groupId){
   roomContextGroupId = groupId || currentGroupIdView;
-  roomContextStayId = stayId;
   document.getElementById("roomSheetTitle").textContent = "New Room";
   document.getElementById("roomId").value = "r" + Date.now();
   document.getElementById("roomLabel").value = "";
@@ -1529,14 +967,11 @@ function openNewRoom(groupId, stayId){
   document.getElementById("roomOverlay").classList.add("show");
 }
 
-function openEditRoom(roomId, groupId, stayId){
+function openEditRoom(roomId, groupId){
   roomContextGroupId = groupId || currentGroupIdView;
-  roomContextStayId = stayId;
   const g = groups.find(x=>x.id===roomContextGroupId);
   if(!g) return;
-  const s = (g.cityStays||[]).find(x=>x.id===stayId);
-  if(!s) return;
-  const r = (s.rooms||[]).find(x=>x.id===roomId);
+  const r = (g.rooms||[]).find(x=>x.id===roomId);
   if(!r) return;
   document.getElementById("roomSheetTitle").textContent = "Edit Room";
   document.getElementById("roomId").value = r.id;
@@ -1554,104 +989,63 @@ function closeRoomSheet(){
 function saveRoom(){
   const g = groups.find(x=>x.id===roomContextGroupId);
   if(!g) return;
-  const s = (g.cityStays||[]).find(x=>x.id===roomContextStayId);
-  if(!s){ alert("Add this hotel stay first, then add rooms to it."); return; }
   const id = document.getElementById("roomId").value || ("r"+Date.now());
   const data = {
     id,
     label: document.getElementById("roomLabel").value.trim() || "Room",
     roomType: document.getElementById("roomTypeSelect").value
   };
-  if(!s.rooms) s.rooms = [];
-  const idx = s.rooms.findIndex(x=>x.id===id);
+  if(!g.rooms) g.rooms = [];
+  const idx = g.rooms.findIndex(x=>x.id===id);
   const isNew = idx<0;
-  if(idx>=0) s.rooms[idx] = data; else s.rooms.push(data);
+  if(idx>=0) g.rooms[idx] = data; else g.rooms.push(data);
   if(!persist()){ alert("Couldn't save room — storage issue."); return; }
 
   document.getElementById("roomOverlay").classList.remove("show");
 
   if(pendingRoomAssignAfterCreate && isNew){
     pendingRoomAssignAfterCreate = false;
-    populateSingleRoomSelect(roomContextStayId, id);
+    populateRoomSelect(id);
   }
-  renderItinerary();
+  renderRooms();
   renderList();
 }
 
 function deleteRoom(){
   const g = groups.find(x=>x.id===roomContextGroupId);
   if(!g) return;
-  const s = (g.cityStays||[]).find(x=>x.id===roomContextStayId);
-  if(!s) return;
   const id = document.getElementById("roomId").value;
   if(!id) return;
-  const occupantCount = (g.members||[]).filter(m=> (m.roomAssignments||{})[roomContextStayId]===id).length;
+  const occupantCount = (g.members||[]).filter(m=>m.roomId===id).length;
   const msg = occupantCount>0
-    ? `This room has ${occupantCount} traveler(s) assigned. Delete anyway? They'll become unassigned for this hotel.`
+    ? `This room has ${occupantCount} traveler(s) assigned. Delete anyway? They'll become unassigned.`
     : "Delete this room?";
   if(!confirm(msg)) return;
-  s.rooms = (s.rooms||[]).filter(x=>x.id!==id);
-  (g.members||[]).forEach(m=>{
-    if(m.roomAssignments && m.roomAssignments[roomContextStayId]===id) delete m.roomAssignments[roomContextStayId];
-  });
+  g.rooms = (g.rooms||[]).filter(x=>x.id!==id);
+  (g.members||[]).forEach(m=>{ if(m.roomId===id) m.roomId = null; });
   persist();
   document.getElementById("roomOverlay").classList.remove("show");
-  renderItinerary();
+  renderRooms();
   renderList();
 }
 
-// ---- traveler form: one room-assignment dropdown per hotel stay ----
-function renderMemberRoomAssignments(selectedAssignments){
-  selectedAssignments = selectedAssignments || {};
+function populateRoomSelect(selectedRoomId){
   const g = groups.find(x=>x.id===memberFormGroupId);
-  const wrap = document.getElementById("memberRoomAssignments");
-  const stays = g ? (g.cityStays||[]) : [];
-  if(!stays.length){
-    wrap.innerHTML = `<div class="docnote">Add a hotel stay to this group first, then you can assign a room per hotel here.</div>`;
-    return;
-  }
-  wrap.innerHTML = stays.map(s=>{
-    const rooms = s.rooms||[];
-    const selectedId = selectedAssignments[s.id] || "";
-    let opts = `<option value="">Unassigned</option>`;
-    opts += rooms.map(r=>`<option value="${r.id}" ${r.id===selectedId?"selected":""}>${r.label} (${r.roomType})</option>`).join("");
-    opts += `<option value="__new__">+ Create New Room…</option>`;
-    return `
-      <div class="field">
-        <label>Room in ${s.city}${s.hotelName ? " — "+s.hotelName : ""}</label>
-        <select data-stay="${s.id}" onchange="onRoomSelectChange(this)">${opts}</select>
-      </div>
-    `;
-  }).join("");
-}
-
-function populateSingleRoomSelect(stayId, selectRoomId){
-  const g = groups.find(x=>x.id===memberFormGroupId);
-  const s = g ? (g.cityStays||[]).find(x=>x.id===stayId) : null;
-  const rooms = s ? (s.rooms||[]) : [];
-  const sel = document.querySelector(`#memberRoomAssignments select[data-stay="${stayId}"]`);
-  if(!sel) return;
+  const rooms = g ? (g.rooms||[]) : [];
+  const sel = document.getElementById("memberRoomId");
   let opts = `<option value="">Unassigned</option>`;
   opts += rooms.map(r=>`<option value="${r.id}">${r.label} (${r.roomType})</option>`).join("");
   opts += `<option value="__new__">+ Create New Room…</option>`;
   sel.innerHTML = opts;
-  sel.value = selectRoomId || "";
+  sel.value = selectedRoomId || "";
 }
 
 function onRoomSelectChange(sel){
   if(sel.value === "__new__"){
     pendingRoomAssignAfterCreate = true;
-    openNewRoom(memberFormGroupId, sel.dataset.stay);
+    openNewRoom(memberFormGroupId);
     sel.value = "";
   }
-}
-
-function collectMemberRoomAssignments(){
-  const out = {};
-  document.querySelectorAll("#memberRoomAssignments select[data-stay]").forEach(sel=>{
-    if(sel.value && sel.value !== "__new__") out[sel.dataset.stay] = sel.value;
-  });
-  return out;
 }
 
 function populateGroupSelect(selectedGroupId){
@@ -1665,7 +1059,7 @@ function populateGroupSelect(selectedGroupId){
 function onMemberGroupChange(sel){
   memberFormGroupId = sel.value;
   currentDriveFolderId = null; // moving groups means a new Drive folder on next upload
-  renderMemberRoomAssignments({});
+  populateRoomSelect("");
 }
 
 // ============ GROUP SHEET ============
@@ -1676,32 +1070,8 @@ function openNewGroup(){
   document.getElementById("groupTravelDate").value = "";
   document.getElementById("groupReturnDate").value = "";
   document.getElementById("groupNotes").value = "";
-  document.getElementById("groupTourGuidePhone").value = "";
-  clearFlightFields();
   document.getElementById("groupDeleteRow").style.display = "none";
   document.getElementById("groupOverlay").classList.add("show");
-}
-
-function clearFlightFields(){
-  ["arrivalAirline","arrivalFlightNo","arrivalDate","arrivalTime","arrivalAirport","arrivalPax",
-   "departureAirline","departureFlightNo","departureDate","departureTime","departureAirport","departurePax"]
-   .forEach(id => document.getElementById(id).value = "");
-}
-
-function fillFlightFields(g){
-  const a = g.arrival || {}, d = g.departure || {};
-  document.getElementById("arrivalAirline").value = a.airline||"";
-  document.getElementById("arrivalFlightNo").value = a.flightNo||"";
-  document.getElementById("arrivalDate").value = a.date||"";
-  document.getElementById("arrivalTime").value = a.time||"";
-  document.getElementById("arrivalAirport").value = a.airport||"";
-  document.getElementById("arrivalPax").value = a.pax||"";
-  document.getElementById("departureAirline").value = d.airline||"";
-  document.getElementById("departureFlightNo").value = d.flightNo||"";
-  document.getElementById("departureDate").value = d.date||"";
-  document.getElementById("departureTime").value = d.time||"";
-  document.getElementById("departureAirport").value = d.airport||"";
-  document.getElementById("departurePax").value = d.pax||"";
 }
 
 function openEditGroup(groupId){
@@ -1713,8 +1083,6 @@ function openEditGroup(groupId){
   document.getElementById("groupTravelDate").value = g.travelDate||"";
   document.getElementById("groupReturnDate").value = g.returnDate||"";
   document.getElementById("groupNotes").value = g.notes||"";
-  document.getElementById("groupTourGuidePhone").value = g.tourGuidePhone||"";
-  fillFlightFields(g);
   document.getElementById("groupDeleteRow").style.display = "flex";
   document.getElementById("groupOverlay").classList.add("show");
 }
@@ -1732,32 +1100,19 @@ function saveGroup(){
     travelDate: document.getElementById("groupTravelDate").value,
     returnDate: document.getElementById("groupReturnDate").value,
     notes: document.getElementById("groupNotes").value.trim(),
-    tourGuidePhone: document.getElementById("groupTourGuidePhone").value.trim(),
     driveFolderId: existing ? existing.driveFolderId : null,
     members: existing ? existing.members : [],
-    cityStays: existing ? (existing.cityStays || []) : [],
-    arrival: {
-      airline: document.getElementById("arrivalAirline").value.trim(),
-      flightNo: document.getElementById("arrivalFlightNo").value.trim(),
-      date: document.getElementById("arrivalDate").value,
-      time: document.getElementById("arrivalTime").value,
-      airport: document.getElementById("arrivalAirport").value.trim(),
-      pax: document.getElementById("arrivalPax").value
-    },
-    departure: {
-      airline: document.getElementById("departureAirline").value.trim(),
-      flightNo: document.getElementById("departureFlightNo").value.trim(),
-      date: document.getElementById("departureDate").value,
-      time: document.getElementById("departureTime").value,
-      airport: document.getElementById("departureAirport").value.trim(),
-      pax: document.getElementById("departurePax").value
-    }
+    rooms: existing ? (existing.rooms || []) : []
   };
   const idx = groups.findIndex(x=>x.id===id);
   if(idx>=0) groups[idx] = data; else groups.push(data);
   if(!persist()){ alert("Couldn't save — storage issue. Try again."); return; }
   closeGroupSheet();
-  renderAll();
+  if(viewMode==="group" && currentGroupIdView===id){
+    renderAll();
+  } else {
+    renderAll();
+  }
 }
 
 function deleteGroup(){
@@ -1780,7 +1135,7 @@ function openNewMember(){
   currentDriveFolderId = null;
   document.getElementById("custName").value = "";
   document.getElementById("custPhone").value = "";
-  renderMemberRoomAssignments({});
+  populateRoomSelect("");
   document.getElementById("totalPrice").value = "";
   document.getElementById("depositAmt").value = "";
   document.getElementById("depositDate").value = "";
@@ -1808,7 +1163,7 @@ function openEditMember(memberId){
   currentDriveFolderId = m.driveFolderId || null;
   document.getElementById("custName").value = m.name||"";
   document.getElementById("custPhone").value = m.phone||"";
-  renderMemberRoomAssignments(m.roomAssignments||{});
+  populateRoomSelect(m.roomId||"");
   document.getElementById("totalPrice").value = m.totalPrice||"";
   document.getElementById("depositAmt").value = m.depositAmt||"";
   document.getElementById("depositDate").value = m.depositDate||"";
@@ -1861,7 +1216,7 @@ function saveMember(){
     driveFolderId: currentDriveFolderId,
     name: document.getElementById("custName").value.trim(),
     phone: document.getElementById("custPhone").value.trim(),
-    roomAssignments: collectMemberRoomAssignments(),
+    roomId: document.getElementById("memberRoomId").value || null,
     totalPrice: document.getElementById("totalPrice").value,
     depositAmt: document.getElementById("depositAmt").value,
     depositDate: document.getElementById("depositDate").value,
